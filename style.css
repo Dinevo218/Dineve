@@ -47,12 +47,15 @@ h1 {
 
 /* Dish Card */
 .dish {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
   padding: 1rem;
   margin-bottom: 1.5rem;
-  text-align: center;
+  gap: 16px;
   transition: transform 0.3s;
 }
 
@@ -61,11 +64,16 @@ h1 {
 }
 
 .dish img {
-  width: 100%;
-  max-height: 180px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.dish-info {
+  flex: 1;
+  text-align: left;
 }
 
 .dish h3 {
@@ -82,26 +90,27 @@ h1 {
 
 .dish-buttons {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 0.5rem;
 }
 
-.ar-btn {
-  background-color: #5138ee;
+.dish-buttons button,
+.dish-buttons .ar-btn {
+  background-color: #222;
   color: white;
   border: none;
-  padding: 0.5rem 1.2rem;
-  font-size: 0.9rem;
-  border-radius: 25px;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
-.ar-btn:hover {
-  background-color: #3a27c4;
+.dish-buttons button:hover,
+.dish-buttons .ar-btn:hover {
+  background-color: #444;
 }
-
 
 /* Floating Buttons */
 .cart-btn,
@@ -109,26 +118,37 @@ h1 {
   position: fixed;
   bottom: 20px;
   font-size: 0.9rem;
-  padding: 0.55rem 1rem;
-  border-radius: 30px;
   border: none;
   cursor: pointer;
   z-index: 1001;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
 }
 
 .cart-btn {
   left: 20px;
   background-color: #088A29;
   color: white;
+  padding: 0.55rem 1rem;
+  border-radius: 30px;
 }
 
 .menu-toggle-btn {
   right: 20px;
-  background-color: #9C6B1F;
+  width: 60px;
+  height: 60px;
+  background-color: #000;
   color: white;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
+
+.menu-toggle-btn:hover {
+  background-color: #333;
 }
 
 /* Section Menu */
@@ -321,15 +341,18 @@ h1 {
 /* Responsive */
 @media (max-width: 500px) {
   .dish {
-    padding: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .dish h3 {
-    font-size: 1rem;
+  .dish img {
+    align-self: flex-end;
+    width: 80px;
+    height: 80px;
   }
 
-  .price {
-    font-size: 0.9rem;
+  .dish-buttons {
+    justify-content: flex-start;
   }
 
   .cart-modal {

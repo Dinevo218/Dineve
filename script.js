@@ -125,8 +125,21 @@ function showToast(message) {
 
 function toggleMenu() {
   const menu = document.getElementById("section-menu");
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  if (menu.style.display === "flex") {
+    menu.style.display = "none";
+  } else {
+    menu.style.display = "flex";
+
+    // Auto-close when a category is clicked
+    const links = menu.querySelectorAll("a");
+    links.forEach(link => {
+      link.onclick = () => {
+        menu.style.display = "none";
+      };
+    });
+  }
 }
+
 
 function viewAR(url) {
   window.open(url, "_blank");
