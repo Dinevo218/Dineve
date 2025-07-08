@@ -1,6 +1,6 @@
 let cart = [];
 
-// Add item to cart
+// ✅ Add item to cart
 function addToCart(name, price) {
   const item = cart.find(dish => dish.name === name);
   if (item) {
@@ -12,13 +12,13 @@ function addToCart(name, price) {
   alert(`${name} added to cart!`);
 }
 
-// Update cart icon count
+// ✅ Update cart icon count
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
   document.getElementById('cart-count').innerText = count;
 }
 
-// Open cart popup
+// ✅ Open cart popup
 function openCart() {
   const cartModal = document.getElementById('cart-modal');
   const cartItemsList = document.getElementById('cart-items');
@@ -30,9 +30,9 @@ function openCart() {
   cart.forEach((item, index) => {
     const li = document.createElement('li');
     li.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
         <div>
-          ${item.name} x${item.qty} 
+          ${item.name} x${item.qty}
           <br><small>₹${item.price * item.qty}</small>
         </div>
         <div>
@@ -49,29 +49,29 @@ function openCart() {
   cartModal.classList.remove('hidden');
 }
 
-// Increase item qty
+// ✅ Increase item quantity
 function increaseQty(index) {
   cart[index].qty++;
-  openCart(); // re-render
+  openCart();
   updateCartCount();
 }
 
-// Decrease item qty
+// ✅ Decrease item quantity
 function decreaseQty(index) {
   cart[index].qty--;
   if (cart[index].qty <= 0) {
     cart.splice(index, 1);
   }
-  openCart(); // re-render
+  openCart();
   updateCartCount();
 }
 
-// Close cart popup
+// ✅ Close cart popup
 function closeCart() {
   document.getElementById('cart-modal').classList.add('hidden');
 }
 
-// Place order
+// ✅ Place order
 function placeOrder() {
   if (cart.length === 0) {
     alert("Your cart is empty!");
@@ -83,8 +83,14 @@ function placeOrder() {
   closeCart();
 }
 
-// Scroll to section
+// ✅ Scroll to category section
 function scrollToCategory(id) {
   const section = document.getElementById(id);
   section.scrollIntoView({ behavior: "smooth" });
+}
+
+// ✅ Toggle category menu popup
+function toggleMenuPopup() {
+  const popup = document.getElementById('menu-popup');
+  popup.classList.toggle('hidden');
 }
