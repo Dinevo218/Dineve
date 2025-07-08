@@ -9,7 +9,7 @@ function addToCart(name, price) {
     cart.push({ name, price, qty: 1 });
   }
   updateCartCount();
-  alert(`${name} added to cart!`);
+ showToast(`${name} added to cart!`);
 }
 
 // ✅ Update cart icon count
@@ -93,4 +93,19 @@ function scrollToCategory(id) {
 function toggleMenuPopup() {
   const popup = document.getElementById('menu-popup');
   popup.classList.toggle('hidden');
+}
+function showToast(message) {
+  let toast = document.createElement("div");
+  toast.className = "custom-toast";
+  toast.innerText = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 100); // trigger animation
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300); // remove after fade out
+  }, 2500);
 }
