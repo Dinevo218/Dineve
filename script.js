@@ -1,111 +1,133 @@
 let cart = [];
 
-// ✅ Add item to cart
 function addToCart(name, price) {
-  const item = cart.find(dish => dish.name === name);
-  if (item) {
-    item.qty++;
+  const existingItem = cart.find(item => item.name === name);
+  if (existingItem) {
+    existingItem.quantity++;
   } else {
-    cart.push({ name, price, qty: 1 });
+    cart.push({ name, price, quantity: 1 });
   }
   updateCartCount();
- showToast(`${name} added to cart!`);
+  showToast(`${name} added to cart`);
 }
 
-// ✅ Update cart icon count
 function updateCartCount() {
-  const count = cart.reduce((sum, item) => sum + item.qty, 0);
-  document.getElementById('cart-count').innerText = count;
+  const count = cart.reduce((total, item) => total + item.quantity, 0);
+  document.getElementById("cart-count").innerText = count;
 }
 
-// ✅ Open cart popup
 function openCart() {
-  const cartModal = document.getElementById('cart-modal');
-  const cartItemsList = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
-
-  cartItemsList.innerHTML = '';
-  let total = 0;
-
-  cart.forEach((item, index) => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <div>
-          ${item.name} x${item.qty}
-          <br><small>₹${item.price * item.qty}</small>
+  const cartModal = document.getElementById("cart-modal");
+  cartModal.innerHTML = `
+    <h2>Your Cart</h2>
+    ${cart.length === 0 ? "<p>Your cart is empty.</p>" : ""}
+    ${cart
+      .map(
+        item => `
+        <div class="cart-item">
+          <span>${item.name} x${item.quantity}</span>
+          <div class="cart-item-controls">
+            <button onclick="increaseQuantity('${item.name}')">+</button>
+            <button onclick="decreaseQuantity('${item.name}')">−</button>
+          </div>
         </div>
-        <div>
-          <button onclick="increaseQty(${index})">➕</button>
-          <button onclick="decreaseQty(${index})">➖</button>
-        </div>
-      </div>
-    `;
-    cartItemsList.appendChild(li);
-    total += item.price * item.qty;
-  });
-
-  cartTotal.innerText = total;
-  cartModal.classList.remove('hidden');
+      `
+      )
+      .join("")}
+    ${
+      cart.length > 0
+        ? `<div class="cart-total">Total: ₹${calculateTotal()}</div>
+           <div class="cart-actions">
+             <button class="place-order" onclick="placeOrder()">Place Order</button>
+             <button class="close" onclick="closeCart()">Close</button>
+           </div>`
+        : '<div style="text-align: right;"><button class="close" onclick="closeCart()">Close</button></div>'
+    }
+  `;
+  cartModal.style.display = "block";
 }
 
-// ✅ Increase item quantity
-function increaseQty(index) {
-  cart[index].qty++;
-  openCart();
-  updateCartCount();
-}
-
-// ✅ Decrease item quantity
-function decreaseQty(index) {
-  cart[index].qty--;
-  if (cart[index].qty <= 0) {
-    cart.splice(index, 1);
-  }
-  openCart();
-  updateCartCount();
-}
-
-// ✅ Close cart popup
 function closeCart() {
-  document.getElementById('cart-modal').classList.add('hidden');
+  document.getElementById("cart-modal").style.display = "none";
 }
 
-// ✅ Place order
+function increaseQuantity(name) {
+  const item = cart.find(item => item.name === name);
+  if (item) {
+    item.quantity++;
+    openCart();
+    updateCartCount();
+  }
+}
+
+function decreaseQuantity(name) {
+  const item = cart.find(item => item.name === name);
+  if (item) {
+    item.quantity--;
+    if (item.quantity === 0) {
+      cart = cart.filter(i => i.name !== name);
+    }
+    openCart();
+    updateCartCount();
+  }
+}
+
+function calculateTotal() {
+  return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+}
+
 function placeOrder() {
   if (cart.length === 0) {
-    alert("Your cart is empty!");
+    showToast("Your cart is empty.");
     return;
   }
-  alert("🎉 Order placed successfully!\nThank you for ordering with Dinévo.");
+
+  const billModal = document.getElementById("bill-modal");
+  const billDetails = document.getElementById("bill-details");
+  const billTotal = document.getElementById("bill-total");
+
+  billDetails.innerHTML = cart
+    .map(
+      item => `
+        <div class="bill-item">
+          <span>${item.name} x${item.quantity}</span>
+          <span>₹${item.price * item.quantity}</span>
+        </div>
+      `
+    )
+    .join("");
+
+  billTotal.innerText = `Total: ₹${calculateTotal()}`;
+  billModal.style.display = "flex";
+
   cart = [];
   updateCartCount();
   closeCart();
 }
 
-// ✅ Scroll to category section
-function scrollToCategory(id) {
-  const section = document.getElementById(id);
-  section.scrollIntoView({ behavior: "smooth" });
+function closeBill() {
+  document.getElementById("bill-modal").style.display = "none";
 }
 
-// ✅ Toggle category menu popup
-function toggleMenuPopup() {
-  const popup = document.getElementById('menu-popup');
-  popup.classList.toggle('hidden');
-}
 function showToast(message) {
-  let toast = document.createElement("div");
-  toast.className = "custom-toast";
+  const toast = document.getElementById("toast");
   toast.innerText = message;
-  document.body.appendChild(toast);
+  toast.style.display = "block";
+  toast.style.opacity = "1";
 
   setTimeout(() => {
-    toast.classList.add("show");
-  }, 100); // trigger animation
+    toast.style.opacity = "0";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 300);
+  }, 3000);
+}
 
-  setTimeout(() => {
-    toast.classList.remove("show");
-    setTimeout(() => toast.remove(), 300); // remove after fade out
-  }, 2500);
+function toggleMenu() {
+  const menu = document.getElementById("section-menu");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+function viewAR(url) {
+  window.open(url, "_blank");
 }

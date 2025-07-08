@@ -2,93 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dinévo - Premium Dining</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dinévo Menu</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+  <!-- Header -->
   <header>
     <h1>Dinévo</h1>
-    <p>Elevating your dining experience with AR</p>
+    <p class="tagline">Fine Dining. Augmented Reality. Future on Your Plate 🍽️</p>
   </header>
 
-  <!-- 🍽️ Menu Sections -->
-  <section class="menu-category" id="starters">
-    <h2>Starters</h2>
-    <div class="dish-list">
+  <!-- Menu -->
+  <main class="menu">
+    <!-- Starters -->
+    <section id="starters" class="menu-section">
+      <h2>Starters</h2>
       <div class="dish">
-        <img src="images/WhatsApp Image 2025-07-01 at 4.39.25 PM.jpg" alt="Starter 1" />
+        <img src="images/WhatsApp Image 2025-07-01 at 4.39.25 PM.jpg" alt="Chilly Basil Chicken" />
         <h3>Chilly Basil Chicken</h3>
-        <p>₹220</p>
-        <button onclick="addToCart('Chilly Basil Chicken', 220)">Add to Cart</button>
+        <p class="price">₹220</p>
+        <div class="dish-buttons">
+          <button onclick="addToCart('Chilly Basil Chicken', 220)">Add to Cart</button>
+          <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/6863c2158e460dd41d5bc312.html')">View AR</button>
+        </div>
       </div>
-      <!-- Add more starter dishes here -->
-    </div>
-  </section>
+    </section>
 
-  <section class="menu-category" id="main-course">
-    <h2>Main Course</h2>
-    <div class="dish-list">
+    <!-- Main Course -->
+    <section id="main-course" class="menu-section">
+      <h2>Main Course</h2>
       <div class="dish">
-        <img src="images/IMG-20250701-WA0052.jpg" alt="Main Course" />
+        <img src="images/IMG-20250701-WA0052.jpg" alt="Khow Suey" />
         <h3>Khow Suey</h3>
-        <p>₹350</p>
-        <button onclick="addToCart('Khow Suey', 350)">Add to Cart</button>
+        <p class="price">₹350</p>
+        <div class="dish-buttons">
+          <button onclick="addToCart('Khow Suey', 350)">Add to Cart</button>
+          <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686644fd8e460dd41d5c0924.html')">View AR</button>
+        </div>
       </div>
-      <!-- Add more main course dishes here -->
-    </div>
-  </section>
+    </section>
 
-  <section class="menu-category" id="desserts">
-    <h2>Desserts</h2>
-    <div class="dish-list">
+    <!-- Desserts -->
+    <section id="desserts" class="menu-section">
+      <h2>Desserts</h2>
       <div class="dish">
-        <img src="images/caption (1).jpg" alt="Dessert" />
+        <img src="images/caption (1).jpg" alt="Lotus Biscoff Cheesecake" />
         <h3>Lotus Biscoff Cheesecake</h3>
-        <p>₹180</p>
-        <button onclick="addToCart('Lotus Biscoff Cheesecake', 180)">Add to Cart</button>
+        <p class="price">₹180</p>
+        <div class="dish-buttons">
+          <button onclick="addToCart('Lotus Biscoff Cheesecake', 180)">Add to Cart</button>
+          <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686629dc8e460dd41d5c06b5.html')">View AR</button>
+        </div>
       </div>
-      <!-- Add more desserts here -->
+    </section>
+  </main>
+
+  <!-- Floating Buttons -->
+  <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+  <button class="menu-toggle-btn" onclick="toggleMenu()">📖 Menu</button>
+
+  <!-- Section Menu -->
+  <div class="section-menu" id="section-menu">
+    <a href="#starters">Starters</a>
+    <a href="#main-course">Main Course</a>
+    <a href="#desserts">Desserts</a>
+  </div>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cart-modal" style="display: none;"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" style="display: none;"></div>
+
+  <!-- Bill Modal -->
+  <div id="bill-modal" class="bill-modal" style="display: none;">
+    <div class="bill-content">
+      <h2>🧾 Your Order</h2>
+      <div id="bill-details"></div>
+      <div class="bill-total" id="bill-total"></div>
+      <button class="back-btn" onclick="closeBill()">Back to Menu</button>
     </div>
-  </section>
-
-  <!-- 🛒 Cart Modal -->
-  <div id="cart-modal" class="cart-modal hidden">
-    <div class="cart-content">
-      <h2>Your Cart</h2>
-      <ul id="cart-items"></ul>
-      <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
-      <button onclick="placeOrder()">Place Order</button>
-      <button onclick="closeCart()">Close</button>
-    </div>
   </div>
 
-  <!-- 🛒 Cart Floating Button -->
-  <div style="position: fixed; bottom: 20px; left: 20px; z-index: 999;">
-    <button onclick="openCart()" style="
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 50px;
-      font-size: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      cursor: pointer;
-    ">🛒 Cart (<span id="cart-count">0</span>)</button>
-  </div>
-
-  <!-- 🍽️ Menu Floating Button -->
-  <div class="menu-float-button" onclick="toggleMenuPopup()">🍽️ Menu</div>
-
-  <!-- 📂 Category Popup -->
-  <div id="menu-popup" class="menu-popup hidden">
-    <button onclick="scrollToCategory('starters'); toggleMenuPopup()">Starters</button>
-    <button onclick="scrollToCategory('main-course'); toggleMenuPopup()">Main Course</button>
-    <button onclick="scrollToCategory('desserts'); toggleMenuPopup()">Desserts</button>
-  </div>
-
-  <!-- JS File -->
   <script src="script.js"></script>
 </body>
 </html>
