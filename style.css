@@ -1,4 +1,4 @@
-/* Fonts & Base Reset */
+/* Base & Font */
 body {
   font-family: 'Playfair Display', serif;
   margin: 0;
@@ -12,6 +12,9 @@ header {
   background-color: #fff;
   padding: 1.2rem 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   text-align: center;
 }
 
@@ -24,6 +27,38 @@ h1 {
 .tagline {
   font-size: 0.95rem;
   color: #777;
+}
+
+/* Offers Scrollable Chips */
+.offers-bar {
+  display: flex;
+  overflow-x: auto;
+  padding: 0.8rem 1rem;
+  gap: 12px;
+  background-color: #fff8f0;
+  border-bottom: 1px solid #f1e7d9;
+  scroll-snap-type: x mandatory;
+  position: sticky;
+  top: 74px;
+  z-index: 999;
+}
+
+.offer-chip {
+  flex: 0 0 auto;
+  background-color: #ffefdb;
+  color: #9C6B1F;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.offer-chip:hover {
+  background-color: #f6e2c4;
 }
 
 /* Menu Layout */
@@ -43,93 +78,90 @@ h1 {
   padding-left: 10px;
 }
 
-/* Dish Card Layout */
+/* Dish Card */
 .dish {
   display: flex;
+  justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-  will-change: transform, opacity;
-}
-
-.dish.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dish img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
   border-radius: 12px;
-  flex-shrink: 0;
+  padding: 1rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
 }
 
-.dish-content {
+.dish-left {
   flex: 1;
 }
 
-.dish-content h3 {
-  font-size: 1.1rem;
-  margin: 0 0 0.3rem;
-}
-
-.dish-desc {
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 0.4rem;
-}
-
-.more-link {
-  color: #007bff;
-  cursor: pointer;
-  font-size: 0.8rem;
-  margin-left: 5px;
+.dish-left h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.2rem 0;
 }
 
 .price {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin: 0.2rem 0;
+}
+
+.desc {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.3rem;
+}
+
+.more-link {
+  color: #888;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.dish-right {
+  text-align: center;
+}
+
+.dish-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.add-btn {
+  background: white;
+  color: #088A29;
+  border: 2px solid #088A29;
   font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.6rem;
-  color: #444;
+  padding: 0.3rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 6px;
 }
 
-.dish-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.add-btn:hover {
+  background: #088A29;
+  color: white;
 }
 
-.dish-buttons button {
-  background-color: #222;
+.ar-btn {
+  background-color: #000000;
   color: white;
   border: none;
-  padding: 0.5rem 1.2rem;
-  font-size: 0.9rem;
-  border-radius: 6px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.85rem;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
-.dish-buttons button:hover {
-  transform: scale(1.05);
-  background-color: #444;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.ar-btn {
-  background-color: #5138ee;
-}
-
 .ar-btn:hover {
-  background-color: #3a27c4;
+  background-color: #0f0f0f;
 }
 
 /* Floating Buttons */
@@ -362,52 +394,19 @@ h1 {
 @media (max-width: 600px) {
   .dish {
     flex-direction: column;
-    align-items: right;
-    text-align: right;
+    align-items: center;
+    text-align: center;
   }
 
-  .dish img {
+  .dish-img {
     margin-bottom: 0.75rem;
   }
 
-  .dish-content {
-    text-align: left;
+  .dish-left {
+    text-align: center;
   }
 
   .dish-buttons {
-    justify-content: left;
+    justify-content: center;
   }
-}
-
-/* Offers Scrollable Chips */
-.offers-bar {
-  display: flex;
-  overflow-x: auto;
-  padding: 0.8rem 1rem;
-  gap: 12px;
-  background-color: #fff8f0;
-  border-bottom: 1px solid #f1e7d9;
-  scroll-snap-type: x mandatory;
-  position: sticky;
-  top: 6px; /* adjust if your header height is different */
-  z-index: 999;
-}
-
-
-.offer-chip {
-  flex: 0 0 auto;
-  background-color: #ffefdb;
-  color: #9C6B1F;
-  font-size: 0.85rem;
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  white-space: nowrap;
-  scroll-snap-align: start;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.offer-chip:hover {
-  background-color: #f6e2c4;
 }
