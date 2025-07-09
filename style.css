@@ -1,32 +1,67 @@
-/* Reset & Fonts */
+/* Base */
 body {
-  font-family: 'Poppins', sans-serif;
-}
-
-h1, h2, h3 {
   font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fdfdfd;
+  color: #333;
 }
 
 /* Header */
 header {
-  background-color: #c39a57;
+  background-color: #fff;
   padding: 1.2rem 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   text-align: center;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin: 0 0 0.3rem;
   color: #222;
 }
 
 .tagline {
   font-size: 0.95rem;
-  color: #000000;
+  color: #777;
 }
 
-/* Menu */
+/* Offers Bar */
+.offers-bar {
+  display: flex;
+  overflow-x: auto;
+  padding: 0.8rem 1rem;
+  gap: 12px;
+  background-color: #fff8f0;
+  border-bottom: 1px solid #f1e7d9;
+  scroll-snap-type: x mandatory;
+  position: sticky;
+  top: 74px;
+  z-index: 999;
+}
+
+.offer-chip {
+  flex: 0 0 auto;
+  background-color: #ffefdb;
+  color: #9C6B1F;
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.offer-chip:hover {
+  background-color: #f6e2c4;
+}
+
+/* Menu Section */
 .menu {
   padding: 1.5rem 1rem;
 }
@@ -47,67 +82,92 @@ h1 {
 .dish {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
-  margin-bottom: 1.5rem;
   gap: 16px;
-  transition: transform 0.3s;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.dish:hover {
-  transform: translateY(-4px);
+.dish-left {
+  flex: 1 1 60%;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.dish img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin: 0;
-}
-
-.dish-info {
-  flex: 1;
-  text-align: left;
-}
-
-.dish h3 {
-  font-size: 1.1rem;
-  margin: 0.5rem 0 0.3rem;
+.dish-left h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.2rem 0;
 }
 
 .price {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #444;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin: 0.2rem 0;
 }
 
-.dish-buttons {
+.desc {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.more-text {
+  display: none;
+}
+
+.more-toggle {
+  color: #888;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.dish-right {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 120px;
 }
 
-.dish-buttons button,
-.dish-buttons .ar-btn {
-  background-color: #222;
-  color: white;
-  border: none;
-  padding: 0.45rem 1rem;
+.dish-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.add-btn,
+.ar-btn {
+  padding: 0.4rem 1.2rem;
   font-size: 0.85rem;
   border-radius: 8px;
+  font-weight: bold;
+  border: none;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.dish-buttons button:hover,
-.dish-buttons .ar-btn:hover {
-  background-color: #444;
+.add-btn {
+  background: white;
+  color: #088A29;
+  border: 2px solid #088A29;
+}
+
+.add-btn:hover {
+  background-color: #088A29;
+  color: white;
+}
+
+.ar-btn {
+  background-color: #000;
+  color: white;
 }
 
 /* Floating Buttons */
@@ -116,37 +176,29 @@ h1 {
   position: fixed;
   bottom: 20px;
   font-size: 0.9rem;
+  padding: 0.55rem 1rem;
+  border-radius: 30px;
   border: none;
   cursor: pointer;
   z-index: 1001;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .cart-btn {
   left: 20px;
   background-color: #088A29;
   color: white;
-  padding: 0.55rem 1rem;
-  border-radius: 30px;
 }
 
 .menu-toggle-btn {
   right: 20px;
+  background-color: black;
+  color: white;
   width: 60px;
   height: 60px;
-  background-color: #000;
-  color: white;
-  font-size: 0.85rem;
-  font-weight: bold;
   border-radius: 50%;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s;
-}
-
-.menu-toggle-btn:hover {
-  background-color: #333;
 }
 
 /* Section Menu */
@@ -260,7 +312,7 @@ h1 {
   color: black;
 }
 
-/* Toast Message */
+/* Toast */
 .toast {
   position: fixed;
   bottom: 120px;
@@ -279,7 +331,7 @@ h1 {
   line-height: 1.4;
 }
 
-/* ✅ Bill Modal */
+/* Bill Modal */
 .bill-modal {
   position: fixed;
   top: 0;
@@ -337,111 +389,26 @@ h1 {
 }
 
 /* Responsive */
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .dish {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
   }
 
-  .dish img {
-    align-self: flex-end;
-    width: 80px;
-    height: 80px;
+  .dish-right {
+    align-items: flex-end;
   }
 
-  .dish-buttons {
-    justify-content: flex-start;
+  .dish-img {
+    width: 90px;
+    height: 90px;
   }
 
-  .cart-modal {
-    padding: 1.25rem;
+  .dish-left h3 {
+    font-size: 0.95rem;
   }
 
-  .cart-item-controls button {
-    width: 28px;
-    height: 28px;
-    font-size: 1rem;
+  .price {
+    font-size: 0.9rem;
   }
-
-  .cart-actions button {
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .section-menu a {
-    font-size: 0.85rem;
-  }
-}
-.dish-desc {
-  font-size: 0.78rem;
-  color: #555;
-  margin-top: 0.2rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-  text-align: left;
-}
-
-.more-toggle {
-  color: #9C6B1F;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.72rem;
-  margin-left: 4px;
-}
-
-.more-text {
-  display: none;
-}
-.offers-bar {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding: 1rem;
-  background-color: #fdf6ee;
-  border-bottom: 1px solid #eee;
-  white-space: nowrap;
-}
-
-.offer {
-  background-color: #fff3d1;
-  border: 1px solid #ffd178;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  color: #a35d00;
-  flex-shrink: 0;
-}
-/* ✅ Dish scroll fade-in */
-.dish {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-  will-change: transform, opacity;
-}
-
-.dish.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ✅ Button hover grow & glow */
-.dish-buttons button:hover {
-  transform: scale(1.05);
-  background-color: #444;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-/* ✅ Floating menu drop animation */
-.section-menu {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.3s ease;
-  transform-origin: bottom right;
-  display: none; /* Important: must still toggle flex from JS */
-}
-
-.section-menu.active {
-  opacity: 1;
-  transform: scale(1);
 }
