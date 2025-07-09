@@ -7,13 +7,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Header -->
   <header>
     <h1>Dinévo</h1>
     <p class="tagline">Fine Dining. Augmented Reality. Future on Your Plate 🍽️</p>
   </header>
 
-  <!-- Menu -->
   <main class="menu">
     <!-- Starters -->
     <section id="starters" class="menu-section">
@@ -21,7 +19,11 @@
       <div class="dish">
         <img src="images/WhatsApp Image 2025-07-01 at 4.39.25 PM.jpg" alt="Chilly Basil Chicken" />
         <h3>Chilly Basil Chicken</h3>
-        <p class="price">₹220</p>
+        <p class="dish-desc">
+          Tender chicken tossed with basil & peppers...
+          <span class="more-text"> Served sizzling with aromatic herbs and a zesty kick to fire up your taste buds.</span>
+          <span class="more-toggle" onclick="toggleMore(this)">more</span>
+        </p>
         <div class="dish-buttons">
           <button onclick="addToCart('Chilly Basil Chicken', 220)">Add to Cart</button>
           <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/6863c2158e460dd41d5bc312.html')">View AR</button>
@@ -35,7 +37,11 @@
       <div class="dish">
         <img src="images/IMG-20250701-WA0052.jpg" alt="Khow Suey" />
         <h3>Khow Suey</h3>
-        <p class="price">₹350</p>
+        <p class="dish-desc">
+          Creamy coconut noodle bowl with veggies...
+          <span class="more-text"> Topped with fried garlic, spring onion, peanuts and traditional Burmese garnish.</span>
+          <span class="more-toggle" onclick="toggleMore(this)">more</span>
+        </p>
         <div class="dish-buttons">
           <button onclick="addToCart('Khow Suey', 350)">Add to Cart</button>
           <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686644fd8e460dd41d5c0924.html')">View AR</button>
@@ -49,7 +55,11 @@
       <div class="dish">
         <img src="images/caption (1).jpg" alt="Lotus Biscoff Cheesecake" />
         <h3>Lotus Biscoff Cheesecake</h3>
-        <p class="price">₹180</p>
+        <p class="dish-desc">
+          Velvety cheesecake with crunchy Biscoff base...
+          <span class="more-text"> Drizzled with cookie butter and topped with a caramelized biscuit.</span>
+          <span class="more-toggle" onclick="toggleMore(this)">more</span>
+        </p>
         <div class="dish-buttons">
           <button onclick="addToCart('Lotus Biscoff Cheesecake', 180)">Add to Cart</button>
           <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686629dc8e460dd41d5c06b5.html')">View AR</button>
@@ -60,22 +70,18 @@
 
   <!-- Floating Buttons -->
   <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
-  <button class="menu-toggle-btn" onclick="toggleMenu()">📖 Menu</button>
+  <<button class="menu-toggle-btn" onclick="toggleMenu()">Menu</button>
 
   <!-- Section Menu -->
   <div class="section-menu" id="section-menu">
-    <a href="#starters">Starters</a>
-    <a href="#main-course">Main Course</a>
-    <a href="#desserts">Desserts</a>
+    <a href="#starters" onclick="toggleMenu()">Starters</a>
+    <a href="#main-course" onclick="toggleMenu()">Main Course</a>
+    <a href="#desserts" onclick="toggleMenu()">Desserts</a>
   </div>
 
-  <!-- Cart Modal -->
   <div class="cart-modal" id="cart-modal" style="display: none;"></div>
-
-  <!-- Toast Notification -->
   <div id="toast" class="toast" style="display: none;"></div>
 
-  <!-- Bill Modal -->
   <div id="bill-modal" class="bill-modal" style="display: none;">
     <div class="bill-content">
       <h2>🧾 Your Order</h2>

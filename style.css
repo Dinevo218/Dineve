@@ -9,12 +9,13 @@ body {
 
 /* Header */
 header {
-  background-color: #fff;
+  background-color: #c39a57;
   padding: 1.2rem 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   position: sticky;
   top: 0;
   z-index: 1000;
+  text-align: center;
 }
 
 h1 {
@@ -25,7 +26,7 @@ h1 {
 
 .tagline {
   font-size: 0.95rem;
-  color: #777;
+  color: #000000;
 }
 
 /* Menu */
@@ -64,8 +65,8 @@ h1 {
 }
 
 .dish img {
-  width: 90px;
-  height: 90px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 10px;
   margin: 0;
@@ -373,4 +374,24 @@ h1 {
   .section-menu a {
     font-size: 0.85rem;
   }
+}
+.dish-desc {
+  font-size: 0.78rem;
+  color: #555;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.more-toggle {
+  color: #9C6B1F;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.72rem;
+  margin-left: 4px;
+}
+
+.more-text {
+  display: none;
 }

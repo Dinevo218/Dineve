@@ -98,7 +98,14 @@ function placeOrder() {
     .join("");
 
   billTotal.innerText = `Total: ₹${calculateTotal()}`;
-  billModal.style.display = "flex";
+  const waiterNumber = "919113692373"; // replace with actual mobile number
+let message = "🧾 Order Summary:%0A";
+cart.forEach(item => {
+  message += `${item.name} x${item.quantity} - ₹${item.price * item.quantity}%0A`;
+});
+message += `%0ATotal: ₹${calculateTotal()}`;
+
+window.open(`https://wa.me/${waiterNumber}?text=${message}`, "_blank");
 
   cart = [];
   updateCartCount();
@@ -143,4 +150,14 @@ function toggleMenu() {
 
 function viewAR(url) {
   window.open(url, "_blank");
+}
+function toggleMore(elem) {
+  const more = elem.previousElementSibling;
+  if (more.style.display === "none" || more.style.display === "") {
+    more.style.display = "inline";
+    elem.innerText = "less";
+  } else {
+    more.style.display = "none";
+    elem.innerText = "more";
+  }
 }
