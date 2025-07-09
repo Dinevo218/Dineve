@@ -446,18 +446,21 @@ h1 {
   transform: scale(1);
 }
 
+/* ✅ Fully remove tap/click blue highlight on all devices */
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+
 button {
   outline: none;
   box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-focus-ring-color: transparent;
 }
-button:focus {
+
+button:focus,
+button:active {
   outline: none;
   box-shadow: none;
 }
 
-button,
-button:focus,
-button:active {
-  outline: none !important;
-  box-shadow: none !important;
-}
