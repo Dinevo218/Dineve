@@ -445,3 +445,19 @@ h1 {
   opacity: 1;
   transform: scale(1);
 }
+
+button {
+  outline: none;
+  box-shadow: none;
+}
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+button,
+button:focus,
+button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
