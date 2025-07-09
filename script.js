@@ -1,6 +1,5 @@
 let cart = [];
 
-// Add item to cart
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
   if (existingItem) {
@@ -11,14 +10,30 @@ function addToCart(name, price) {
   updateCartCount();
   showToast(`${name} added to cart`);
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Update cart count
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.quantity, 0);
   document.getElementById("cart-count").innerText = count;
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Open cart modal
 function openCart() {
   const cartModal = document.getElementById("cart-modal");
   cartModal.innerHTML = `
@@ -49,13 +64,29 @@ function openCart() {
   `;
   cartModal.style.display = "block";
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Close cart modal
 function closeCart() {
   document.getElementById("cart-modal").style.display = "none";
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Increase quantity
 function increaseQuantity(name) {
   const item = cart.find(item => item.name === name);
   if (item) {
@@ -64,8 +95,16 @@ function increaseQuantity(name) {
     updateCartCount();
   }
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Decrease quantity
 function decreaseQuantity(name) {
   const item = cart.find(item => item.name === name);
   if (item) {
@@ -77,13 +116,29 @@ function decreaseQuantity(name) {
     updateCartCount();
   }
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Calculate total
 function calculateTotal() {
   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Place order and send via WhatsApp
 function placeOrder() {
   if (cart.length === 0) {
     showToast("Your cart is empty.");
@@ -109,12 +164,29 @@ function placeOrder() {
   closeCart();
 }
 
-// Close bill modal
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
+
 function closeBill() {
   document.getElementById("bill-modal").style.display = "none";
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Toast message
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.innerText = message;
@@ -128,15 +200,23 @@ function showToast(message) {
     }, 300);
   }, 3000);
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Toggle category menu
 function toggleMenu() {
   const menu = document.getElementById("section-menu");
   if (menu.classList.contains("active")) {
     menu.classList.remove("active");
     setTimeout(() => {
       menu.style.display = "none";
-    }, 300);
+    }, 300); // wait for animation
   } else {
     menu.style.display = "flex";
     setTimeout(() => {
@@ -145,12 +225,30 @@ function toggleMenu() {
   }
 }
 
-// View AR model
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
+
+
 function viewAR(url) {
   window.open(url, "_blank");
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
-// Toggle ...more description
 function toggleMore(elem) {
   const more = elem.previousElementSibling;
   if (more.style.display === "none" || more.style.display === "") {
@@ -161,8 +259,7 @@ function toggleMore(elem) {
     elem.innerText = "more";
   }
 }
-
-// Scroll reveal once
+// ✅ Scroll reveal for dish cards
 window.addEventListener('scroll', () => {
   document.querySelectorAll('.dish').forEach(dish => {
     const rect = dish.getBoundingClientRect();
