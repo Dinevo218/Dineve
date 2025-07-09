@@ -47,7 +47,7 @@ h1 {
 .dish {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: top;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
@@ -62,8 +62,8 @@ h1 {
 }
 
 .dish img {
-  width: 180px;
-  height: 180px;
+  width: 210px;
+  height: 210px;
   object-fit: cover;
   border-radius: 10px;
   margin: 0;
