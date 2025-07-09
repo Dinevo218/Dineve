@@ -12,13 +12,13 @@ function addToCart(name, price) {
   showToast(`${name} added to cart`);
 }
 
-// Update cart count
+// Update cart count badge
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.quantity, 0);
   document.getElementById("cart-count").innerText = count;
 }
 
-// Open cart modal
+// Open Cart Modal
 function openCart() {
   const cartModal = document.getElementById("cart-modal");
   cartModal.innerHTML = `
@@ -44,14 +44,14 @@ function openCart() {
   cartModal.style.display = "block";
 }
 
-// Close cart modal
+// Close Cart Modal
 function closeCart() {
   document.getElementById("cart-modal").style.display = "none";
 }
 
-// Increase quantity
+// Increase quantity in cart
 function increaseQuantity(name) {
-  const item = cart.find(item => item.name === name);
+  const item = cart.find(i => i.name === name);
   if (item) {
     item.quantity++;
     openCart();
@@ -59,12 +59,12 @@ function increaseQuantity(name) {
   }
 }
 
-// Decrease quantity
+// Decrease quantity in cart
 function decreaseQuantity(name) {
-  const item = cart.find(item => item.name === name);
+  const item = cart.find(i => i.name === name);
   if (item) {
     item.quantity--;
-    if (item.quantity === 0) {
+    if (item.quantity <= 0) {
       cart = cart.filter(i => i.name !== name);
     }
     openCart();
@@ -72,12 +72,12 @@ function decreaseQuantity(name) {
   }
 }
 
-// Calculate total cost
+// Calculate total price
 function calculateTotal() {
-  return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 }
 
-// Place order: show bill modal
+// Finalize order and show bill
 function placeOrder() {
   if (cart.length === 0) {
     showToast("Your cart is empty.");
@@ -108,7 +108,7 @@ function closeBill() {
   document.getElementById("bill-modal").style.display = "none";
 }
 
-// Toast message
+// Toast notification
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.innerText = message;
@@ -130,7 +130,7 @@ function toggleMenu() {
     menu.classList.remove("active");
     setTimeout(() => {
       menu.style.display = "none";
-    }, 300);
+    }, 200);
   } else {
     menu.style.display = "flex";
     setTimeout(() => {
@@ -139,6 +139,7 @@ function toggleMenu() {
   }
 }
 
+// Close menu when category selected
 function closeMenu() {
   const menu = document.getElementById("section-menu");
   menu.classList.remove("active");
@@ -147,31 +148,17 @@ function closeMenu() {
   }, 300);
 }
 
-// View AR model
+// View AR model in new tab
 function viewAR(url) {
   window.open(url, "_blank");
 }
 
-// Toggle dish description
-function toggleDesc(element) {
-  const shortDesc = element.closest('.dish').querySelector('.dish-desc.short');
-  const fullDesc = element.closest('.dish').querySelector('.dish-desc.full');
-
-  if (shortDesc.style.display === "none") {
-    shortDesc.style.display = "block";
-    fullDesc.style.display = "none";
-  } else {
-    shortDesc.style.display = "none";
-    fullDesc.style.display = "block";
-  }
-}
-
-// Scroll animation for dishes
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
+// Reveal dishes as they scroll into view
+window.addEventListener("scroll", () => {
+  document.querySelectorAll(".dish").forEach(dish => {
     const rect = dish.getBoundingClientRect();
     if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
+      dish.classList.add("visible");
     }
   });
 });
