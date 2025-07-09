@@ -1,5 +1,6 @@
 let cart = [];
 
+// Add item to cart
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
   if (existingItem) {
@@ -10,83 +11,45 @@ function addToCart(name, price) {
   updateCartCount();
   showToast(`${name} added to cart`);
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Update cart count
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.quantity, 0);
   document.getElementById("cart-count").innerText = count;
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Open cart modal
 function openCart() {
   const cartModal = document.getElementById("cart-modal");
   cartModal.innerHTML = `
     <h2>Your Cart</h2>
     ${cart.length === 0 ? "<p>Your cart is empty.</p>" : ""}
-    ${cart
-      .map(
-        item => `
-        <div class="cart-item">
-          <span>${item.name} x${item.quantity}</span>
-          <div class="cart-item-controls">
-            <button onclick="increaseQuantity('${item.name}')">+</button>
-            <button onclick="decreaseQuantity('${item.name}')">−</button>
-          </div>
+    ${cart.map(item => `
+      <div class="cart-item">
+        <span>${item.name} x${item.quantity}</span>
+        <div class="cart-item-controls">
+          <button onclick="increaseQuantity('${item.name}')">+</button>
+          <button onclick="decreaseQuantity('${item.name}')">−</button>
         </div>
-      `
-      )
-      .join("")}
-    ${
-      cart.length > 0
-        ? `<div class="cart-total">Total: ₹${calculateTotal()}</div>
-           <div class="cart-actions">
-             <button class="place-order" onclick="placeOrder()">Place Order</button>
-             <button class="close" onclick="closeCart()">Close</button>
-           </div>`
-        : '<div style="text-align: right;"><button class="close" onclick="closeCart()">Close</button></div>'
-    }
+      </div>
+    `).join("")}
+    ${cart.length > 0
+      ? `<div class="cart-total">Total: ₹${calculateTotal()}</div>
+         <div class="cart-actions">
+           <button class="place-order" onclick="placeOrder()">Total Bill</button>
+           <button class="close" onclick="closeCart()">Close</button>
+         </div>`
+      : '<div style="text-align: right;"><button class="close" onclick="closeCart()">Close</button></div>'}
   `;
   cartModal.style.display = "block";
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Close cart modal
 function closeCart() {
   document.getElementById("cart-modal").style.display = "none";
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Increase quantity
 function increaseQuantity(name) {
   const item = cart.find(item => item.name === name);
   if (item) {
@@ -95,16 +58,8 @@ function increaseQuantity(name) {
     updateCartCount();
   }
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Decrease quantity
 function decreaseQuantity(name) {
   const item = cart.find(item => item.name === name);
   if (item) {
@@ -116,29 +71,13 @@ function decreaseQuantity(name) {
     updateCartCount();
   }
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Calculate total cost
 function calculateTotal() {
   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Place order: show bill modal
 function placeOrder() {
   if (cart.length === 0) {
     showToast("Your cart is empty.");
@@ -149,54 +88,27 @@ function placeOrder() {
   const billDetails = document.getElementById("bill-details");
   const billTotal = document.getElementById("bill-total");
 
-  billDetails.innerHTML = cart
-    .map(
-      item => `
-        <div class="bill-item">
-          <span>${item.name} x${item.quantity}</span>
-          <span>₹${item.price * item.quantity}</span>
-        </div>
-      `
-    )
-    .join("");
+  billDetails.innerHTML = cart.map(item => `
+    <div class="bill-item">
+      <span>${item.name} x${item.quantity}</span>
+      <span>₹${item.price * item.quantity}</span>
+    </div>
+  `).join("");
 
   billTotal.innerText = `Total: ₹${calculateTotal()}`;
-  const waiterNumber = "919113692373"; // replace with actual mobile number
-let message = "🧾 Order Summary:%0A";
-cart.forEach(item => {
-  message += `${item.name} x${item.quantity} - ₹${item.price * item.quantity}%0A`;
-});
-message += `%0ATotal: ₹${calculateTotal()}`;
-
-window.open(`https://wa.me/${waiterNumber}?text=${message}`, "_blank");
+  billModal.style.display = "flex";
 
   cart = [];
   updateCartCount();
   closeCart();
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Close bill modal
 function closeBill() {
   document.getElementById("bill-modal").style.display = "none";
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Toast message
 function showToast(message) {
   const toast = document.getElementById("toast");
   toast.innerText = message;
@@ -210,23 +122,15 @@ function showToast(message) {
     }, 300);
   }, 3000);
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
+// Toggle floating menu
 function toggleMenu() {
   const menu = document.getElementById("section-menu");
   if (menu.classList.contains("active")) {
     menu.classList.remove("active");
     setTimeout(() => {
       menu.style.display = "none";
-    }, 300); // wait for animation
+    }, 300);
   } else {
     menu.style.display = "flex";
     setTimeout(() => {
@@ -235,41 +139,34 @@ function toggleMenu() {
   }
 }
 
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
+function closeMenu() {
+  const menu = document.getElementById("section-menu");
+  menu.classList.remove("active");
+  setTimeout(() => {
+    menu.style.display = "none";
+  }, 300);
+}
 
-
+// View AR model
 function viewAR(url) {
   window.open(url, "_blank");
 }
-// ✅ Scroll reveal for dish cards
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.dish').forEach(dish => {
-    const rect = dish.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 50) {
-      dish.classList.add('visible');
-    }
-  });
-});
 
-function toggleMore(elem) {
-  const more = elem.previousElementSibling;
-  if (more.style.display === "none" || more.style.display === "") {
-    more.style.display = "inline";
-    elem.innerText = "less";
+// Toggle dish description
+function toggleDesc(element) {
+  const shortDesc = element.closest('.dish').querySelector('.dish-desc.short');
+  const fullDesc = element.closest('.dish').querySelector('.dish-desc.full');
+
+  if (shortDesc.style.display === "none") {
+    shortDesc.style.display = "block";
+    fullDesc.style.display = "none";
   } else {
-    more.style.display = "none";
-    elem.innerText = "more";
+    shortDesc.style.display = "none";
+    fullDesc.style.display = "block";
   }
 }
-// ✅ Scroll reveal for dish cards
+
+// Scroll animation for dishes
 window.addEventListener('scroll', () => {
   document.querySelectorAll('.dish').forEach(dish => {
     const rect = dish.getBoundingClientRect();
