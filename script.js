@@ -10,11 +10,29 @@ function addToCart(name, price) {
   updateCartCount();
   showToast(`${name} added to cart`);
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.quantity, 0);
   document.getElementById("cart-count").innerText = count;
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function openCart() {
   const cartModal = document.getElementById("cart-modal");
@@ -46,10 +64,28 @@ function openCart() {
   `;
   cartModal.style.display = "block";
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function closeCart() {
   document.getElementById("cart-modal").style.display = "none";
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function increaseQuantity(name) {
   const item = cart.find(item => item.name === name);
@@ -59,6 +95,15 @@ function increaseQuantity(name) {
     updateCartCount();
   }
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function decreaseQuantity(name) {
   const item = cart.find(item => item.name === name);
@@ -71,10 +116,28 @@ function decreaseQuantity(name) {
     updateCartCount();
   }
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function calculateTotal() {
   return cart.reduce((total, item) => total + item.price * item.quantity, 0);
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function placeOrder() {
   if (cart.length === 0) {
@@ -111,10 +174,28 @@ window.open(`https://wa.me/${waiterNumber}?text=${message}`, "_blank");
   updateCartCount();
   closeCart();
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function closeBill() {
   document.getElementById("bill-modal").style.display = "none";
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function showToast(message) {
   const toast = document.getElementById("toast");
@@ -129,28 +210,55 @@ function showToast(message) {
     }, 300);
   }, 3000);
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 function toggleMenu() {
   const menu = document.getElementById("section-menu");
-  if (menu.style.display === "flex") {
-    menu.style.display = "none";
+  if (menu.classList.contains("active")) {
+    menu.classList.remove("active");
+    setTimeout(() => {
+      menu.style.display = "none";
+    }, 300); // wait for animation
   } else {
     menu.style.display = "flex";
-
-    // Auto-close when a category is clicked
-    const links = menu.querySelectorAll("a");
-    links.forEach(link => {
-      link.onclick = () => {
-        menu.style.display = "none";
-      };
-    });
+    setTimeout(() => {
+      menu.classList.add("active");
+    }, 10);
   }
 }
+
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
 
 
 function viewAR(url) {
   window.open(url, "_blank");
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
+
 function toggleMore(elem) {
   const more = elem.previousElementSibling;
   if (more.style.display === "none" || more.style.display === "") {
@@ -161,3 +269,12 @@ function toggleMore(elem) {
     elem.innerText = "more";
   }
 }
+// ✅ Scroll reveal for dish cards
+window.addEventListener('scroll', () => {
+  document.querySelectorAll('.dish').forEach(dish => {
+    const rect = dish.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 50) {
+      dish.classList.add('visible');
+    }
+  });
+});
