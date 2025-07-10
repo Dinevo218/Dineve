@@ -339,14 +339,33 @@ h1 {
 /* Responsive */
 @media (max-width: 500px) {
   .dish {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 
-  .dish img {
-    align-self: flex-end;
-    width: 80px;
-    height: 80px;
+  .dish-left {
+    flex: 1 1 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .dish-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    min-width: 100px;
+    gap: 10px;
+  }
+
+  .dish-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
   }
 
   .dish-buttons {
@@ -372,6 +391,7 @@ h1 {
     font-size: 0.85rem;
   }
 }
+
 .dish-desc {
   font-size: 0.78rem;
   color: #555;
