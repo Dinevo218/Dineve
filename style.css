@@ -566,20 +566,15 @@ button:active {
 
 .dish {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
-  padding: 1.2rem;
+  padding: 1rem;
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   margin-bottom: 1.5rem;
   transition: 0.3s ease;
-}
-
-.dish:hover {
-  transform: translateY(-4px);
 }
 
 .dish-left {
@@ -605,7 +600,7 @@ button:active {
     text-align: center;
   }
 
- .dish-left, .dish-right {
+  .dish-left, .dish-right {
     width: 100%;
   }
 
@@ -613,3 +608,4 @@ button:active {
     margin-top: 1rem;
   }
 }
+
