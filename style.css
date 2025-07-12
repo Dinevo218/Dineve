@@ -417,7 +417,7 @@ h1 {
   overflow-x: auto;
   gap: 10px;
   padding: 1rem;
-  background-color: #dfba91;
+  background-color: #fdf6ee;
   border-bottom: 1px solid #eee;
   white-space: nowrap;
 }
@@ -551,4 +551,15 @@ button:active {
   border-radius: 25px;
   margin-top: 1rem;
   cursor: pointer;
+}
+
+.unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.unavailable-text {
+  color: #b30000;
+  font-weight: bold;
+  margin-top: 8px;
 }
