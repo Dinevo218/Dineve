@@ -156,16 +156,7 @@ function placeOrder() {
     </div>
   `).join("");
 
-  const total = calculateTotal();
-const discount = Math.round(total * 0.10);
-const finalAmount = total - discount;
-
-billTotal.innerHTML = `
-  <div>Subtotal: ₹${total}</div>
-  <div style="color: green;">10% Cashback: -₹${discount}</div>
-  <strong>Total Payable: ₹${finalAmount}</strong>
-`;
-
+  billTotal.innerText = `Total: ₹${calculateTotal()}`;
   billModal.style.display = "flex";
 
   cart = [];
@@ -278,20 +269,6 @@ window.addEventListener('scroll', () => {
   });
 });
 
-function redeemCashback() {
-  const name = document.getElementById("user-name").value.trim();
-  const phone = document.getElementById("user-phone").value.trim();
-
-  if (!name || !phone || phone.length < 10) {
-    showToast("Please enter valid name and mobile number.");
-    return;
-  }
-
-  showToast(`Hi ${name}, 🎉 you've unlocked 10% cashback!`);
-  document.getElementById("welcome-section").style.display = "none";
-  document.getElementById("main-content").style.display = "block";
-}
-
 function closeMenu() {
   const menu = document.getElementById("section-menu");
   menu.classList.remove("active");
@@ -299,41 +276,3 @@ function closeMenu() {
     menu.style.display = "none";
   }, 300);
 }
-
-function fetchAvailability() {
-  fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQFmMKgYgZpPNoHR8t7ZyL1oWebI1cZfqRjTqeW96ATTY2nJWwVuIU3WN06P9K1BeoEYmizCp66ZXGR/pub?gid=0&single=true&output=csv')
-    .then(response => response.text())
-    .then(csv => {
-      const lines = csv.split('\n');
-      const availabilityMap = {};
-
-      for (let i = 1; i < lines.length; i++) {
-        const [dishName, available] = lines[i].split(',').map(cell => cell.trim().replace(/^"|"$/g, ''));
-        if (dishName) {
-          availabilityMap[dishName] = available;
-        }
-      }
-
-      document.querySelectorAll('.dish').forEach(dish => {
-        const nameEl = dish.querySelector('h3');
-        if (!nameEl) return;
-        const dishName = nameEl.textContent.trim();
-
-        if (availabilityMap[dishName] && availabilityMap[dishName].toUpperCase() === 'N') {
-          dish.classList.add('unavailable');
-          const addBtn = dish.querySelector('.add-btn');
-          const arBtn = dish.querySelector('.ar-btn');
-          const status = document.createElement('div');
-          status.className = 'unavailable-text';
-          status.innerText = 'Not available today';
-          dish.querySelector('.dish-left').appendChild(status);
-          if (addBtn) addBtn.disabled = true;
-          if (arBtn) arBtn.disabled = true;
-        }
-      });
-    })
-    .catch(err => {
-      console.error('Failed to fetch availability:', err);
-    });
-}
-document.addEventListener('DOMContentLoaded', fetchAvailability);
