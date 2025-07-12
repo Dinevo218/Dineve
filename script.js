@@ -291,3 +291,11 @@ function redeemCashback() {
   document.getElementById("welcome-section").style.display = "none";
   document.getElementById("main-content").style.display = "block";
 }
+
+function closeMenu() {
+  const menu = document.getElementById("section-menu");
+  menu.classList.remove("active");
+  setTimeout(() => {
+    menu.style.display = "none";
+  }, 300);
+}
