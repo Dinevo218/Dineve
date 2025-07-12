@@ -1,6 +1,7 @@
 /* Reset & Fonts */
 body {
   font-family: 'Poppins', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1, h2, h3 {
@@ -23,7 +24,7 @@ h1 {
 
 .tagline {
   font-size: 0.95rem;
-  color: #000000;
+  color: #000;
 }
 
 /* Menu */
@@ -43,54 +44,75 @@ h1 {
   padding-left: 10px;
 }
 
-/* Dish Card */
+/* Dish Layout */
 .dish {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  align-items: flex-start;
+  gap: 1rem;
   padding: 1rem;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   margin-bottom: 1.5rem;
-  gap: 16px;
-  transition: transform 0.3s;
+  transition: 0.3s ease;
+  flex-wrap: nowrap;
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: transform, opacity;
 }
 
-.dish:hover {
-  transform: translateY(-4px);
+.dish.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.dish img {
-  width: 180px;
-  height: 180px;
+.dish-left {
+  flex-shrink: 0;
+}
+
+.dish-left img,
+.dish-img {
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   border-radius: 10px;
-  margin: 0;
 }
 
-.dish-info {
-  flex: 1;
-  text-align: left;
+.dish-right {
+  flex-grow: 1;
 }
 
 .dish h3 {
-  font-size: 1.1rem;
-  margin: 0.5rem 0 0.3rem;
+  margin: 0;
+  font-size: 1.2rem;
 }
 
-.price {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #444;
+.dish-desc,
+.description {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0.3rem 0 0.4rem;
+  line-height: 1.4;
+}
+
+.more-toggle {
+  color: #9C6B1F;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+.more-text {
+  display: none;
 }
 
 .dish-buttons {
+  margin-top: 0.4rem;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 0.5rem;
 }
 
 .dish-buttons button,
@@ -102,12 +124,45 @@ h1 {
   font-size: 0.85rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.dish-buttons button:hover,
-.dish-buttons .ar-btn:hover {
+.dish-buttons button:hover {
+  transform: scale(1.05);
   background-color: #444;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dish.unavailable {
+  background-color: #f2f2f2;
+  opacity: 0.7;
+}
+
+.unavailable-text {
+  margin-top: 0.5rem;
+  color: red;
+  font-weight: bold;
+}
+
+/* Offers Scroll Bar */
+.offers-bar {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 1rem;
+  background-color: #fdf6ee;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+.offer {
+  background-color: #fff3d1;
+  border: 1px solid #ffd178;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #a35d00;
+  flex-shrink: 0;
 }
 
 /* Floating Buttons */
@@ -142,14 +197,13 @@ h1 {
   font-weight: bold;
   border-radius: 50%;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s;
 }
 
 .menu-toggle-btn:hover {
   background-color: #333;
 }
 
-/* Section Menu */
+/* Menu Drop */
 .section-menu {
   position: fixed;
   bottom: 80px;
@@ -163,6 +217,15 @@ h1 {
   flex-direction: column;
   gap: 10px;
   z-index: 999;
+  opacity: 0;
+  transform: scale(0.9);
+  transform-origin: bottom right;
+  transition: all 0.3s ease;
+}
+
+.section-menu.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .section-menu a {
@@ -171,7 +234,6 @@ h1 {
   color: #333;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
-  transition: background 0.3s;
 }
 
 .section-menu a:hover {
@@ -260,7 +322,7 @@ h1 {
   color: black;
 }
 
-/* Toast Message */
+/* Toast */
 .toast {
   position: fixed;
   bottom: 120px;
@@ -273,13 +335,11 @@ h1 {
   font-size: 0.9rem;
   opacity: 0.95;
   z-index: 1003;
-  white-space: pre-line;
-  text-align: left;
   max-width: 80%;
   line-height: 1.4;
 }
 
-/* ✅ Bill Modal */
+/* Bill Modal */
 .bill-modal {
   position: fixed;
   top: 0;
@@ -336,190 +396,7 @@ h1 {
   width: 100%;
 }
 
-/* Responsive */
-@media (max-width: 500px) {
-  .dish {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .dish-left {
-    flex: 1 1 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-
-  .dish-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    min-width: 100px;
-    gap: 10px;
-  }
-
-  .dish-img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  .dish-buttons {
-    justify-content: flex-start;
-  }
-
-  .cart-modal {
-    padding: 1.25rem;
-  }
-
-  .cart-item-controls button {
-    width: 28px;
-    height: 28px;
-    font-size: 1rem;
-  }
-
-  .cart-actions button {
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .section-menu a {
-    font-size: 0.85rem;
-  }
-}
-
-.dish-desc {
-  font-size: 0.78rem;
-  color: #555;
-  margin-top: 0.2rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.4;
-  text-align: left;
-}
-
-.more-toggle {
-  color: #9C6B1F;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.72rem;
-  margin-left: 4px;
-}
-
-.more-text {
-  display: none;
-}
-.offers-bar {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding: 1rem;
-  background-color: #fdf6ee;
-  border-bottom: 1px solid #eee;
-  white-space: nowrap;
-}
-
-.offer {
-  background-color: #fff3d1;
-  border: 1px solid #ffd178;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  color: #a35d00;
-  flex-shrink: 0;
-}
-/* ✅ Dish scroll fade-in */
-.dish {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-out;
-  will-change: transform, opacity;
-}
-
-.dish.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ✅ Button hover grow & glow */
-.dish-buttons button:hover {
-  transform: scale(1.05);
-  background-color: #444;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
-}
-
-/* ✅ Floating menu drop animation */
-.section-menu {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: all 0.3s ease;
-  transform-origin: bottom right;
-  display: none; /* Important: must still toggle flex from JS */
-}
-
-.section-menu.active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* ✅ Fully remove tap/click blue highlight on all devices */
-body {
-  -webkit-tap-highlight-color: transparent;
-}
-
-button {
-  outline: none;
-  box-shadow: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-focus-ring-color: transparent;
-}
-
-button:focus,
-button:active {
-  outline: none;
-  box-shadow: none;
-}
-
-.dish {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  background: #fff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.dish-left {
-  flex: 1 1 60%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-.dish-right {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  min-width: 100px;
-  gap: 10px;
-}
-
-.dish-img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
+/* Welcome Section */
 .welcome-container {
   text-align: center;
   padding: 2rem 1rem;
@@ -553,47 +430,7 @@ button:active {
   cursor: pointer;
 }
 
-.dish.unavailable {
-  background-color: #eee !important;
-  opacity: 0.6;
-}
-
-.unavailable-text {
-  margin-top: 0.5rem;
-  color: red;
-  font-weight: bold;
-}
-
-.dish {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1.5rem;
-  transition: 0.3s ease;
-}
-
-.dish-left {
-  flex: 1;
-  min-width: 200px;
-}
-
-.dish-right {
-  flex-shrink: 0;
-}
-
-.dish-right img {
-  width: 130px;
-  height: 130px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-/* Mobile responsive */
+/* Responsive */
 @media (max-width: 600px) {
   .dish {
     flex-direction: column;
@@ -602,10 +439,14 @@ button:active {
 
   .dish-left, .dish-right {
     width: 100%;
+    text-align: center;
   }
 
-  .dish-right img {
-    margin-top: 1rem;
+  .dish-left img {
+    margin: 0 auto;
+  }
+
+  .dish-buttons {
+    justify-content: center;
   }
 }
-
