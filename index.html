@@ -5,99 +5,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dinévo Menu</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
-    <h1>Dinévo</h1>
-    <p class="tagline">Augmenting Reality Enhancing Movements</p>
-  </header>
-<div class="offers-bar">
-  <div class="offer">💸 50% off up to ₹100</div>
-  <div class="offer">🎉 Use code DINE50</div>
-  <div class="offer">🛵 Free delivery above ₹149</div>
-  <div class="offer">🔥 ₹75 off on orders over ₹300</div>
-</div>
 
-  <main class="menu">
-    <!-- Starters -->
-    <section id="starters" class="menu-section">
-      <h2>Starters</h2>
-      <div class="dish">
-        <img src="images/WhatsApp Image 2025-07-01 at 4.39.25 PM.jpg" alt="Chilly Basil Chicken" />
-        <h3>Chilly Basil Chicken</h3>
-        <p class="dish-desc">
-          Tender chicken tossed with basil & peppers...
-          <span class="more-text"> Served sizzling with aromatic herbs and a zesty kick to fire up your taste buds.</span>
-          <span class="more-toggle" onclick="toggleMore(this)">more</span>
-        </p>
-        <div class="dish-buttons">
-          <button onclick="addToCart('Chilly Basil Chicken', 220)">Add to Cart</button>
-          <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/6863c2158e460dd41d5bc312.html')">View AR</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Main Course -->
-    <section id="main-course" class="menu-section">
-      <h2>Main Course</h2>
-      <div class="dish">
-        <img src="images/Khow suey.jpg" alt="Khow Suey" />
-        <h3>Khow Suey</h3>
-        <p class="dish-desc">
-          Creamy coconut noodle bowl with veggies...
-          <span class="more-text"> Topped with fried garlic, spring onion, peanuts and traditional Burmese garnish.</span>
-          <span class="more-toggle" onclick="toggleMore(this)">more</span>
-        </p>
-        <div class="dish-buttons">
-          <button onclick="addToCart('Khow Suey', 350)">Add to Cart</button>
-          <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686644fd8e460dd41d5c0924.html')">View AR</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Desserts -->
-    <section id="desserts" class="menu-section">
-      <h2>Desserts</h2>
-      <div class="dish">
-        <img src="images/Lotus Biscoff.jpg" alt="Lotus Biscoff Cheesecake" />
-        <h3>Lotus Biscoff Cheesecake</h3>
-        <p class="dish-desc">
-          Velvety cheesecake with crunchy Biscoff base...
-          <span class="more-text"> Drizzled with cookie butter and topped with a caramelized biscuit.</span>
-          <span class="more-toggle" onclick="toggleMore(this)">more</span>
-        </p>
-        <div class="dish-buttons">
-          <button onclick="addToCart('Lotus Biscoff Cheesecake', 180)">Add to Cart</button>
-          <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686629dc8e460dd41d5c06b5.html')">View AR</button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Floating Buttons -->
-  <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
-  <<button class="menu-toggle-btn" onclick="toggleMenu()">Menu</button>
-
-  <!-- Section Menu -->
-  <div class="section-menu" id="section-menu">
-    <a href="#starters" onclick="toggleMenu()">Starters</a>
-    <a href="#main-course" onclick="toggleMenu()">Main Course</a>
-    <a href="#desserts" onclick="toggleMenu()">Desserts</a>
+  <!-- Welcome Cashback Section -->
+  <div id="welcome-section" class="welcome-container">
+    <h2>🎁 Get 10% Cashback!</h2>
+    <input type="text" id="user-name" placeholder="Enter your name" />
+    <input type="tel" id="user-phone" placeholder="Enter your mobile number" />
+    <button onclick="redeemCashback()">Redeem Now</button>
   </div>
 
-  <div class="cart-modal" id="cart-modal" style="display: none;"></div>
-  <div id="toast" class="toast" style="display: none;"></div>
+  <!-- Main Website Content -->
+  <div id="main-content" style="display: none;">
+    <!-- Header -->
+    <header>
+      <h1>Dinévo</h1>
+      <p class="tagline">Fine Dining. Augmented Reality. Future on Your Plate 🍽️</p>
+    </header>
 
-  <div id="bill-modal" class="bill-modal" style="display: none;">
-    <div class="bill-content">
-      <h2>🧾 Your Order</h2>
-      <div id="bill-details"></div>
-      <div class="bill-total" id="bill-total"></div>
-      <button class="back-btn" onclick="closeBill()">Back to Menu</button>
+    <!-- Offers Bar -->
+    <div class="offers-bar">
+      <div class="offer-chip">Flat ₹100 Off</div>
+      <div class="offer-chip">Buy 1 Get 1</div>
+      <div class="offer-chip">Free Delivery</div>
+      <div class="offer-chip">20% Off Above ₹500</div>
+      <div class="offer-chip">Use Code DIN100</div>
+    </div>
+
+    <!-- Menu -->
+    <main class="menu">
+      <!-- Starters -->
+      <section id="starters" class="menu-section">
+        <h2>Starters</h2>
+        <div class="dish">
+          <div class="dish-left">
+            <h3>Chilly Basil Chicken</h3>
+            <p class="price">₹220</p>
+            <p class="desc">Crispy chicken with Thai basil and chili glaze... <span class="more-text">Served hot and spicy with herbs and garlic oil.</span><span class="more-toggle" onclick="toggleMore(this)">more</span></p>
+            <div class="dish-buttons">
+              <button class="add-btn" onclick="addToCart('Chilly Basil Chicken', 220)">ADD</button>
+              <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/6863c2158e460dd41d5bc312.html')">View AR</button>
+            </div>
+          </div>
+          <div class="dish-right">
+            <img src="images/WhatsApp Image 2025-07-01 at 4.39.25 PM.jpg" alt="Chilly Basil Chicken" class="dish-img" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Main Course -->
+      <section id="main-course" class="menu-section">
+        <h2>Main Course</h2>
+        <div class="dish">
+          <div class="dish-left">
+            <h3>Khow Suey</h3>
+            <p class="price">₹350</p>
+            <p class="desc">Burmese coconut noodle bowl... <span class="more-text">Rich curry, crispy garlic, peanuts and lime on top.</span><span class="more-toggle" onclick="toggleMore(this)">more</span></p>
+            <div class="dish-buttons">
+              <button class="add-btn" onclick="addToCart('Khow Suey', 350)">ADD</button>
+              <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686644fd8e460dd41d5c0924.html')">View AR</button>
+            </div>
+          </div>
+          <div class="dish-right">
+            <img src="images/Khow suey.jpg" alt="Khow Suey" class="dish-img" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Desserts -->
+      <section id="desserts" class="menu-section">
+        <h2>Desserts</h2>
+        <div class="dish">
+          <div class="dish-left">
+            <h3>Lotus Biscoff Cheesecake</h3>
+            <p class="price">₹180</p>
+            <p class="desc">Caramelized biscuit crumble delight... <span class="more-text">Soft cheesecake layered with rich Biscoff sauce.</span><span class="more-toggle" onclick="toggleMore(this)">more</span></p>
+            <div class="dish-buttons">
+              <button class="add-btn" onclick="addToCart('Lotus Biscoff Cheesecake', 180)">ADD</button>
+              <button class="ar-btn" onclick="viewAR('https://v.magiscan.app/model/686629dc8e460dd41d5c06b5.html')">View AR</button>
+            </div>
+          </div>
+          <div class="dish-right">
+            <img src="images/Lotus Biscoff.jpg" alt="Lotus Biscoff Cheesecake" class="dish-img" />
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Floating Buttons -->
+    <button class="cart-btn" onclick="openCart()">🛒<br><span id="cart-count">0</span></button>
+    <button class="menu-toggle-btn" onclick="toggleMenu()">Menu</button>
+
+    <!-- Section Menu -->
+    <div class="section-menu" id="section-menu">
+      <a href="#starters" onclick="closeMenu()">Starters</a>
+      <a href="#main-course" onclick="closeMenu()">Main Course</a>
+      <a href="#desserts" onclick="closeMenu()">Desserts</a>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cart-modal" style="display: none;"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" style="display: none;"></div>
+
+    <!-- Bill Modal -->
+    <div id="bill-modal" class="bill-modal" style="display: none;">
+      <div class="bill-content">
+        <h2>🧾 Your Order</h2>
+        <div id="bill-details"></div>
+        <div class="bill-total" id="bill-total"></div>
+        <button class="back-btn" onclick="closeBill()">Back to Menu</button>
+      </div>
     </div>
   </div>
 
+  <!-- JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>

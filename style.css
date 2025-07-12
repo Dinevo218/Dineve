@@ -417,7 +417,7 @@ h1 {
   overflow-x: auto;
   gap: 10px;
   padding: 1rem;
-  background-color: #fdf6ee;
+  background-color: #dfba91;
   border-bottom: 1px solid #eee;
   white-space: nowrap;
 }
@@ -518,4 +518,37 @@ button:active {
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+.welcome-container {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: #fff5e6;
+}
+
+.welcome-container h2 {
+  margin-bottom: 1rem;
+  color: #9C6B1F;
+}
+
+.welcome-container input {
+  display: block;
+  margin: 0.5rem auto;
+  padding: 0.75rem 1rem;
+  width: 80%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.welcome-container button {
+  background-color: #088A29;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 25px;
+  margin-top: 1rem;
+  cursor: pointer;
 }

@@ -156,7 +156,16 @@ function placeOrder() {
     </div>
   `).join("");
 
-  billTotal.innerText = `Total: ₹${calculateTotal()}`;
+  const total = calculateTotal();
+const discount = Math.round(total * 0.10);
+const finalAmount = total - discount;
+
+billTotal.innerHTML = `
+  <div>Subtotal: ₹${total}</div>
+  <div style="color: green;">10% Cashback: -₹${discount}</div>
+  <strong>Total Payable: ₹${finalAmount}</strong>
+`;
+
   billModal.style.display = "flex";
 
   cart = [];
@@ -268,3 +277,17 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+
+function redeemCashback() {
+  const name = document.getElementById("user-name").value.trim();
+  const phone = document.getElementById("user-phone").value.trim();
+
+  if (!name || !phone || phone.length < 10) {
+    showToast("Please enter valid name and mobile number.");
+    return;
+  }
+
+  showToast(`Hi ${name}, 🎉 you've unlocked 10% cashback!`);
+  document.getElementById("welcome-section").style.display = "none";
+  document.getElementById("main-content").style.display = "block";
+}
