@@ -566,16 +566,16 @@ button:active {
 
 .dish {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  background-color: white;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  background-color: white;
   margin-bottom: 1.5rem;
-  gap: 1rem;
   transition: 0.3s ease;
-  flex-wrap: wrap;
 }
 
 .dish:hover {
@@ -584,7 +584,7 @@ button:active {
 
 .dish-left {
   flex: 1;
-  min-width: 220px;
+  min-width: 200px;
 }
 
 .dish-right {
@@ -592,8 +592,8 @@ button:active {
 }
 
 .dish-right img {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   object-fit: cover;
   border-radius: 12px;
 }
@@ -602,15 +602,14 @@ button:active {
 @media (max-width: 600px) {
   .dish {
     flex-direction: column;
-    align-items: center;
     text-align: center;
   }
 
-  .dish-left {
-    align-items: center;
+ .dish-left, .dish-right {
+    width: 100%;
   }
 
-  .dish-right {
-    margin-top: 10px;
+  .dish-right img {
+    margin-top: 1rem;
   }
 }
