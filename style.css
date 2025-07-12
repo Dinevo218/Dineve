@@ -563,3 +563,56 @@ button:active {
   font-weight: bold;
   margin-top: 8px;
 }
+
+.dish {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.dish:hover {
+  transform: translateY(-4px);
+}
+
+.dish-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dish-right {
+  flex-shrink: 0;
+}
+
+.dish-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .dish {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .dish-left {
+    align-items: center;
+  }
+
+  .dish-right {
+    margin-top: 10px;
+  }
+}
