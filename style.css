@@ -524,14 +524,3 @@ button:active {
   object-fit: cover;
   border-radius: 10px;
 }
-
-.dish.unavailable {
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-.dish.unavailable button {
-  background-color: #ccc !important;
-  color: #666 !important;
-  cursor: not-allowed;
-}
