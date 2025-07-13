@@ -3,16 +3,20 @@ let lastSentCart = [];
 let dishAvailability = {};
 
 function fetchAvailability() {
-  Tabletop.init({
-    key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTL34LR6KMObjAmea2yMLo_q-cGBpXfdpHzcohEnXQBHbmPBKybhIBqBdNs6amYXjbEqcYuaXiMnI2R/pubhtml',
-    callback: function(data) {
-      data.forEach(row => {
-        dishAvailability[row['Dish Name']] = row['Available'].toUpperCase() === 'Y';
+  fetch('https://v1.nocodeapi.com/dinevo/google_sheets/quoTnlsNzLudWGjI?tabId=Sheet1')
+    .then(res => res.json())
+    .then(data => {
+      const rows = data.data;
+      rows.forEach(row => {
+        const name = row[0];         // Column A: Dish Name
+        const available = row[1];    // Column B: Y or N
+        dishAvailability[name] = available.toUpperCase() === 'Y';
       });
       updateMenuAvailability();
-    },
-    simpleSheet: true
-  });
+    })
+    .catch(error => {
+      console.error('Error fetching dish availability:', error);
+    });
 }
 
 function updateMenuAvailability() {
@@ -20,7 +24,7 @@ function updateMenuAvailability() {
     const dishName = dishEl.querySelector('h3')?.innerText.trim();
     const isAvailable = dishAvailability[dishName];
 
-    const addBtn = dishEl.querySelector('button');
+    const addBtn = dishEl.querySelector('.dish-buttons button');
     if (isAvailable === false) {
       dishEl.classList.add('unavailable');
       if (addBtn) {
@@ -32,6 +36,7 @@ function updateMenuAvailability() {
 }
 
 window.addEventListener('DOMContentLoaded', fetchAvailability);
+
 
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
