@@ -7,15 +7,18 @@ function fetchAvailability() {
     .then(res => res.json())
     .then(data => {
       const rows = data.data;
-      rows.forEach(row => {
-        const name = row[0];         // Column A: Dish Name
-        const available = row[1];    // Column B: Y or N
-        dishAvailability[name] = available.toUpperCase() === 'Y';
-      });
+
+      // Start from index 1 to skip header row
+      for (let i = 1; i < rows.length; i++) {
+        const name = rows[i][0]?.trim();
+        const available = rows[i][1]?.trim().toUpperCase();
+        dishAvailability[name] = available === 'Y';
+      }
+
       updateMenuAvailability();
     })
     .catch(error => {
-      console.error('Error fetching dish availability:', error);
+      console.error('Error fetching availability:', error);
     });
 }
 
@@ -36,6 +39,7 @@ function updateMenuAvailability() {
 }
 
 window.addEventListener('DOMContentLoaded', fetchAvailability);
+
 
 
 function addToCart(name, price) {
