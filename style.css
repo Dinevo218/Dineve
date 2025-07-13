@@ -387,6 +387,11 @@ h1 {
     padding: 0.5rem 1rem;
   }
 
+  .cart-actions .send-order {
+  background-color: #ffc107;
+  color: black;
+}
+
   .section-menu a {
     font-size: 0.85rem;
   }
@@ -518,4 +523,14 @@ button:active {
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+.dish.unavailable {
+  opacity: 0.5;
+}
+
+.dish.unavailable .dish-buttons button:disabled {
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
 }

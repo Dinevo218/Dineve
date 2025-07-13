@@ -1,11 +1,12 @@
 let cart = [];
+let lastSentCart = [];
 
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
   if (existingItem) {
     existingItem.quantity++;
   } else {
-    cart.push({ name, price, quantity: 1 });
+    cart.push({ name, price, quantity: 1, sent: false }); // Add `sent: false`
   }
   updateCartCount();
   showToast(`${name} added to cart`);
@@ -36,6 +37,7 @@ window.addEventListener('scroll', () => {
 
 function openCart() {
   const cartModal = document.getElementById("cart-modal");
+
   cartModal.innerHTML = `
     <h2>Your Cart</h2>
     ${cart.length === 0 ? "<p>Your cart is empty.</p>" : ""}
@@ -56,14 +58,17 @@ function openCart() {
       cart.length > 0
         ? `<div class="cart-total">Total: ₹${calculateTotal()}</div>
            <div class="cart-actions">
+             <button class="send-order" onclick="sendOrderToWaiter()">Send Order</button>
              <button class="place-order" onclick="placeOrder()">Place Order</button>
              <button class="close" onclick="closeCart()">Close</button>
            </div>`
         : '<div style="text-align: right;"><button class="close" onclick="closeCart()">Close</button></div>'
     }
   `;
+
   cartModal.style.display = "block";
 }
+
 // ✅ Scroll reveal for dish cards
 window.addEventListener('scroll', () => {
   document.querySelectorAll('.dish').forEach(dish => {
@@ -159,7 +164,9 @@ function placeOrder() {
   billTotal.innerText = `Total: ₹${calculateTotal()}`;
   billModal.style.display = "flex";
 
+  // Clear everything
   cart = [];
+  lastSentCart = [];
   updateCartCount();
   closeCart();
 }
@@ -276,3 +283,32 @@ function closeMenu() {
     menu.style.display = "none";
   }, 300);
 }
+
+function sendOrderToWaiter() {
+  const newItems = cart.map(currentItem => {
+    const previous = lastSentCart.find(prev => prev.name === currentItem.name);
+    const prevQty = previous ? previous.quantity : 0;
+    const newQty = currentItem.quantity - prevQty;
+
+    return newQty > 0
+      ? { name: currentItem.name, quantity: newQty }
+      : null;
+  }).filter(item => item !== null);
+
+  if (newItems.length === 0) {
+    showToast("No new items to send.");
+    return;
+  }
+
+  const message = newItems.map(item => `${item.name} x${item.quantity}`).join('\n');
+  const phone = "919113692373"; // Change to your waiter’s number
+  const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+  // Update last sent cart to match current state
+  lastSentCart = cart.map(item => ({ ...item }));
+
+  // Redirect to WhatsApp
+  window.open(whatsappURL, '_blank');
+}
+
+
