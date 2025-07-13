@@ -1,5 +1,37 @@
 let cart = [];
 let lastSentCart = [];
+let dishAvailability = {};
+
+function fetchAvailability() {
+  Tabletop.init({
+    key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTL34LR6KMObjAmea2yMLo_q-cGBpXfdpHzcohEnXQBHbmPBKybhIBqBdNs6amYXjbEqcYuaXiMnI2R/pubhtml',
+    callback: function(data) {
+      data.forEach(row => {
+        dishAvailability[row['Dish Name']] = row['Available'].toUpperCase() === 'Y';
+      });
+      updateMenuAvailability();
+    },
+    simpleSheet: true
+  });
+}
+
+function updateMenuAvailability() {
+  document.querySelectorAll('.dish').forEach(dishEl => {
+    const dishName = dishEl.querySelector('h3')?.innerText.trim();
+    const isAvailable = dishAvailability[dishName];
+
+    const addBtn = dishEl.querySelector('button');
+    if (isAvailable === false) {
+      dishEl.classList.add('unavailable');
+      if (addBtn) {
+        addBtn.disabled = true;
+        addBtn.innerText = 'Not available today';
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', fetchAvailability);
 
 function addToCart(name, price) {
   const existingItem = cart.find(item => item.name === name);
