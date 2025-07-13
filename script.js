@@ -2,44 +2,64 @@ let cart = [];
 let lastSentCart = [];
 let dishAvailability = {};
 
+function normalizeName(name) {
+  return name.toLowerCase().trim();
+}
+
 function fetchAvailability() {
   fetch('https://v1.nocodeapi.com/dinevo/google_sheets/quoTnlsNzLudWGjI?tabId=Sheet1')
     .then(res => res.json())
     .then(data => {
       const rows = data.data;
 
-      // Start from index 1 to skip header row
+      if (!rows || rows.length === 0) {
+        throw new Error("No data found in sheet");
+      }
+
       for (let i = 1; i < rows.length; i++) {
-        const name = rows[i][0]?.trim();
-        const available = rows[i][1]?.trim().toUpperCase();
-        dishAvailability[name] = available === 'Y';
+        const rawName = rows[i][0];
+        const rawStatus = rows[i][1];
+
+        if (!rawName || !rawStatus) continue;
+
+        const name = normalizeName(rawName);
+        const available = rawStatus.trim().toUpperCase() === 'Y';
+        dishAvailability[name] = available;
       }
 
       updateMenuAvailability();
     })
     .catch(error => {
-      console.error('Error fetching availability:', error);
+      console.error('🚨 Error fetching availability:', error);
     });
 }
 
+
 function updateMenuAvailability() {
   document.querySelectorAll('.dish').forEach(dishEl => {
-    const dishName = dishEl.querySelector('h3')?.innerText.trim();
+    const h3 = dishEl.querySelector('h3');
+    if (!h3) return;
+
+    const dishName = normalizeName(h3.innerText);
     const isAvailable = dishAvailability[dishName];
 
-    const addBtn = dishEl.querySelector('.dish-buttons button');
+    console.log(`🧪 Dish: "${dishName}" | Available: ${isAvailable}`);
+
     if (isAvailable === false) {
       dishEl.classList.add('unavailable');
-      if (addBtn) {
-        addBtn.disabled = true;
-        addBtn.innerText = 'Not available today';
-      }
+
+      const buttons = dishEl.querySelectorAll('.dish-buttons button');
+      buttons.forEach(btn => {
+        if (btn.innerText.toLowerCase().includes('add')) {
+          btn.disabled = true;
+          btn.innerText = 'Not available today';
+        }
+      });
     }
   });
 }
 
 window.addEventListener('DOMContentLoaded', fetchAvailability);
-
 
 
 function addToCart(name, price) {

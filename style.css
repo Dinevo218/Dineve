@@ -527,11 +527,11 @@ button:active {
 
 .dish.unavailable {
   opacity: 0.5;
+  pointer-events: none;
 }
 
-.dish.unavailable .dish-buttons button:disabled {
-  background-color: #ccc;
-  color: #777;
+.dish.unavailable button {
+  background-color: #ccc !important;
+  color: #666 !important;
   cursor: not-allowed;
 }
-
