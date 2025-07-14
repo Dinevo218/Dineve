@@ -14,14 +14,14 @@ function fetchAvailability() {
     .then(html => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-
       const table = doc.querySelector('table');
-      if (!table) throw new Error("No table found in published sheet");
+
+      if (!table) throw new Error("❌ No table found in Google Sheet");
 
       const rows = table.querySelectorAll('tbody tr');
 
       rows.forEach((row, index) => {
-        if (index === 0) return; // Skip header row
+        if (index === 0) return; // skip header
         const cells = row.querySelectorAll('td');
         if (cells.length >= 2) {
           const name = normalizeName(cells[0].innerText);
@@ -30,9 +30,10 @@ function fetchAvailability() {
         }
       });
 
+      console.log("🔄 Availability map:", dishAvailability);
       updateMenuAvailability();
     })
-    .catch(err => console.error("⚠️ Sheet Fetch Error:", err));
+    .catch(err => console.error("⚠️ Error loading sheet:", err));
 }
 
 function updateMenuAvailability() {
