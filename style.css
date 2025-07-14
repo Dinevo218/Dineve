@@ -524,3 +524,9 @@ button:active {
   object-fit: cover;
   border-radius: 10px;
 }
+
+/* ✅ Visually dim unavailable dishes */
+.dish.unavailable {
+  opacity: 0.4;
+  pointer-events: none;
+}
