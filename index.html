@@ -12,15 +12,15 @@
     <h1>Dinévo</h1>
     <p class="tagline">Augmenting Reality Enhancing Movements</p>
   </header>
-<div class="offers-bar">
-  <div class="offer">💸 50% off up to ₹100</div>
-  <div class="offer">🎉 Use code DINE50</div>
-  <div class="offer">🛵 Free delivery above ₹149</div>
-  <div class="offer">🔥 ₹75 off on orders over ₹300</div>
-</div>
+
+  <div class="offers-bar">
+    <div class="offer">💸 50% off up to ₹100</div>
+    <div class="offer">🎉 Use code DINE50</div>
+    <div class="offer">🛵 Free delivery above ₹149</div>
+    <div class="offer">🔥 ₹75 off on orders over ₹300</div>
+  </div>
 
   <main class="menu">
-    <!-- Starters -->
     <section id="starters" class="menu-section">
       <h2>Starters</h2>
       <div class="dish">
@@ -38,7 +38,6 @@
       </div>
     </section>
 
-    <!-- Main Course -->
     <section id="main-course" class="menu-section">
       <h2>Main Course</h2>
       <div class="dish">
@@ -56,7 +55,6 @@
       </div>
     </section>
 
-    <!-- Desserts -->
     <section id="desserts" class="menu-section">
       <h2>Desserts</h2>
       <div class="dish">
@@ -75,11 +73,10 @@
     </section>
   </main>
 
-  <!-- Floating Buttons -->
+  <!-- ✅ Fixed: Removed extra "<" -->
   <button class="cart-btn" onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
   <button class="menu-toggle-btn" onclick="toggleMenu()">Menu</button>
 
-  <!-- Section Menu -->
   <div class="section-menu" id="section-menu">
     <a href="#starters" onclick="closeMenu()">Starters</a>
     <a href="#main-course" onclick="closeMenu()">Main Course</a>
