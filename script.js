@@ -59,12 +59,13 @@ function updateMenuAvailability(dishAvailability) {
       buttons.forEach(btn => {
         if (btn.innerText.toLowerCase().includes('not available')) {
           btn.disabled = false;
-          btn.in
+          btn.innerText = 'Add to Cart';
+        }
+      });
+    }
+  });
+}
 
-
-
-// ✅ Dummy Cart Setup (replace with real cart if needed)
-let cart = [];
 
 function openCart() {
   const cartModal = document.getElementById("cart-modal");
@@ -151,25 +152,6 @@ function viewAR(url) {
   window.open(url, "_blank");
 }
 
-function toggleMore(elem) {
-  const more = elem.previousElementSibling;
-  if (more.style.display === "none" || more.style.display === "") {
-    more.style.display = "inline";
-    elem.innerText = "less";
-  } else {
-    more.style.display = "none";
-    elem.innerText = "more";
-  }
-}
-
-function closeMenu() {
-  const menu = document.getElementById("section-menu");
-  menu.classList.remove("active");
-  setTimeout(() => {
-    menu.style.display = "none";
-  }, 300);
-}
-
 function sendOrderToWaiter() {
   const newItems = cart.map(currentItem => {
     const previous = lastSentCart.find(prev => prev.name === currentItem.name);
@@ -191,3 +173,7 @@ function sendOrderToWaiter() {
   lastSentCart = cart.map(item => ({ ...item }));
   window.open(whatsappURL, '_blank');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchAvailability();
+});
