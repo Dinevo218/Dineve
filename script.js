@@ -7,29 +7,32 @@ function normalizeName(name) {
 }
 
 function fetchAvailability() {
-  const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pubhtml?gid=0&single=true';
+  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pubhtml?gid=0&single=true";
 
   fetch(sheetURL)
-    .then(response => response.text())
+    .then(res => res.text())
     .then(html => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-      const rows = doc.querySelectorAll('table tr');
 
-      for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].querySelectorAll('td');
+      const table = doc.querySelector('table');
+      if (!table) throw new Error("No table found in published sheet");
+
+      const rows = table.querySelectorAll('tbody tr');
+
+      rows.forEach((row, index) => {
+        if (index === 0) return; // Skip header row
+        const cells = row.querySelectorAll('td');
         if (cells.length >= 2) {
           const name = normalizeName(cells[0].innerText);
-          const available = cells[1].innerText.trim().toUpperCase() === 'Y';
-          dishAvailability[name] = available;
+          const status = cells[1].innerText.trim().toUpperCase();
+          dishAvailability[name] = status === 'Y';
         }
-      }
+      });
 
       updateMenuAvailability();
     })
-    .catch(error => {
-      console.error('🚨 Failed to fetch sheet HTML:', error);
-    });
+    .catch(err => console.error("⚠️ Sheet Fetch Error:", err));
 }
 
 function updateMenuAvailability() {
