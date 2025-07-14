@@ -127,11 +127,30 @@ function addToCart(name, price) {
 }
 
 function placeOrder() {
-  showToast("✅ Order placed successfully!");
-  cart = [];
-  document.getElementById("cart-count").innerText = 0;
-  closeCart();
+  const billDetails = document.getElementById("bill-details");
+  const billTotal = document.getElementById("bill-total");
+  let html = "";
+
+  if (cart.length === 0) {
+    showToast("Cart is empty!");
+    return;
+  }
+
+  cart.forEach(item => {
+    html += `<div class="bill-item">
+      <span>${item.name} x ${item.quantity}</span>
+      <span>₹${item.price * item.quantity}</span>
+    </div>`;
+  });
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  billDetails.innerHTML = html;
+  billTotal.innerHTML = `Total: ₹${total}`;
+
+  document.getElementById("bill-modal").style.display = "flex";
+  closeCart(); // Hide cart modal
 }
+
 
 function showToast(message) {
   const toast = document.getElementById("toast");
@@ -192,3 +211,7 @@ function sendOrderToWaiter() {
 document.addEventListener('DOMContentLoaded', () => {
   fetchAvailability();
 });
+
+function closeBill() {
+  document.getElementById("bill-modal").style.display = "none";
+}
