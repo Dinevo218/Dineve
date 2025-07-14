@@ -30,13 +30,13 @@ function fetchAvailability() {
         }
       }
 
-      console.log("✅ Loaded dish availability:", dishAvailability);
-      updateMenuAvailability();
-    })
-    .catch(error => {
-      console.error('🚨 Error loading sheet data:', error);
-    });
-}
+      console.log("🔎 Comparing dish names from sheet to menu:");
+
+document.querySelectorAll('.dish').forEach(dishEl => {
+  const h3 = dishEl.querySelector('h3');
+  const dishName = normalizeName(h3.innerText);
+  console.log(`HTML Dish: "${dishName}"`, "→ Available:", dishAvailability[dishName]);
+});
 
 function updateMenuAvailability() {
   console.log("🔄 Availability map:", dishAvailability); // Debug line
@@ -45,21 +45,26 @@ function updateMenuAvailability() {
     const h3 = dishEl.querySelector('h3');
     if (!h3) return;
 
-    const dishName = normalizeName(h3.innerText);
-    const isAvailable = dishAvailability[dishName];
+const dishName = normalizeName(h3.innerText);
+const isAvailable = dishAvailability[dishName];
 
-    console.log(`🧪 Dish: "${dishName}" | Available: ${isAvailable}`);
-
-    if (isAvailable === false) {
-      dishEl.classList.add('unavailable');
-
-      const buttons = dishEl.querySelectorAll('.dish-buttons button');
-      buttons.forEach(btn => {
-        if (btn.innerText.toLowerCase().includes('add')) {
-          btn.disabled = true;
-          btn.innerText = 'Not available today';
-        }
-      });
+if (isAvailable === false) {
+  dishEl.classList.add('unavailable');
+  const buttons = dishEl.querySelectorAll('.dish-buttons button');
+  buttons.forEach(btn => {
+    if (btn.innerText.toLowerCase().includes('add')) {
+      btn.disabled = true;
+      btn.innerText = 'Not available today';
+    }
+  });
+} else {
+  // Restore if previously hidden
+  dishEl.classList.remove('unavailable');
+  const buttons = dishEl.querySelectorAll('.dish-buttons button');
+  buttons.forEach(btn => {
+    if (btn.innerText === 'Not available today') {
+      btn.disabled = false;
+      btn.innerText = 'Add to Cart';
     }
   });
 }
