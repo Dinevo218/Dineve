@@ -75,9 +75,14 @@ function openCart() {
   if (cart.length === 0) {
     html += "<p>Your cart is empty.</p>";
   } else {
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
       html += `<div class="cart-item">
-        <span>${item.name} x ${item.quantity}</span>
+        <span>${item.name}</span>
+        <div class="cart-item-controls">
+          <button onclick="changeQuantity(${index}, -1)">−</button>
+          <span>${item.quantity}</span>
+          <button onclick="changeQuantity(${index}, 1)">+</button>
+        </div>
         <span>₹${item.price * item.quantity}</span>
       </div>`;
     });
@@ -94,6 +99,16 @@ function openCart() {
   cartModal.innerHTML = html;
   cartModal.style.display = "block";
 }
+
+function changeQuantity(index, delta) {
+  cart[index].quantity += delta;
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1); // Remove item if quantity is 0 or less
+  }
+  document.getElementById("cart-count").innerText = cart.reduce((sum, i) => sum + i.quantity, 0);
+  openCart(); // Re-render cart modal
+}
+
 
 function closeCart() {
   document.getElementById("cart-modal").style.display = "none";
