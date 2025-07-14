@@ -3,7 +3,7 @@ let lastSentCart = [];
 let dishAvailability = {};
 
 function normalizeName(name) {
-  return name.toLowerCase().trim();
+  return name.toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
 function fetchAvailability() {
