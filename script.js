@@ -8,46 +8,43 @@ function normalizeName(name) {
 
 
 function fetchAvailability() {
-  fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pub?gid=0&single=true&output=html')
-    .then(res => res.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
+  fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pub?output=csv')
+    .then(response => response.text())
+    .then(csv => {
+      const lines = csv.trim().split('\n');
+      const dishAvailability = {};
 
-      const rows = doc.querySelectorAll('table tr');
-      dishAvailability = {};
+      for (let i = 1; i < lines.length; i++) {
+        const [rawName, rawStatus] = lines[i].split(',');
 
-      rows.forEach((row, index) => {
-        if (index === 0) return; // skip header
-        const cols = row.querySelectorAll('td');
-        if (cols.length < 2) return;
+        if (!rawName || !rawStatus) continue;
 
-        const name = normalizeName(cols[0].innerText);
-        const status = cols[1].innerText.trim().toUpperCase();
-        dishAvailability[name] = (status === 'Y');
-      });
+        const name = rawName.trim().toLowerCase();
+        const available = rawStatus.trim().toUpperCase() === 'Y';
+        dishAvailability[name] = available;
+      }
 
-      console.log("✅ Parsed availability from Google Sheet:", dishAvailability);
-      updateMenuAvailability();
+      console.log("🔄 Availability map:", dishAvailability);
+      updateMenuAvailability(dishAvailability);
     })
-    .catch(err => console.error('❌ Failed to fetch availability:', err));
+    .catch(error => {
+      console.error('❌ Failed to load availability:', error);
+    });
 }
 
-
-function updateMenuAvailability() {
+function updateMenuAvailability(dishAvailability) {
   document.querySelectorAll('.dish').forEach(dishEl => {
     const h3 = dishEl.querySelector('h3');
-    if (!h3) return;
-
-    const dishName = normalizeName(h3.innerText);
+    const dishName = h3?.innerText?.toLowerCase().trim();
     const isAvailable = dishAvailability[dishName];
 
-    console.log(`🧪 Checking "${dishName}" →`, isAvailable);
-
-    const buttons = dishEl.querySelectorAll('.dish-buttons button');
+    console.log(`🧪 Checking "${dishName}":`, isAvailable);
 
     if (isAvailable === false) {
       dishEl.classList.add('unavailable');
+      dishEl.style.opacity = 0.4;
+
+      const buttons = dishEl.querySelectorAll('button');
       buttons.forEach(btn => {
         if (btn.innerText.toLowerCase().includes('add')) {
           btn.disabled = true;
@@ -56,15 +53,14 @@ function updateMenuAvailability() {
       });
     } else {
       dishEl.classList.remove('unavailable');
+      dishEl.style.opacity = 1;
+
+      const buttons = dishEl.querySelectorAll('button');
       buttons.forEach(btn => {
-        if (btn.innerText === 'Not available today') {
+        if (btn.innerText.toLowerCase().includes('not available')) {
           btn.disabled = false;
-          btn.innerText = 'Add to Cart';
-        }
-      });
-    }
-  });
-}
+          btn.in
+
 
 
 // 🛒 Everything below is unchanged (your existing cart logic)...
