@@ -36,6 +36,7 @@ function fetchAvailability() {
 }
 
 function updateMenuAvailability() {
+  console.log("🔄 Availability map:", dishAvailability);
   document.querySelectorAll('.dish').forEach(dishEl => {
     const h3 = dishEl.querySelector('h3');
     if (!h3) return;
