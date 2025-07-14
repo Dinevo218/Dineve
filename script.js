@@ -7,33 +7,35 @@ function normalizeName(name) {
 }
 
 function fetchAvailability() {
-  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pubhtml?gid=0&single=true";
-
-  fetch(sheetURL)
-    .then(res => res.text())
+  fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pubhtml?gid=0&single=true')
+    .then(response => response.text())
     .then(html => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
       const table = doc.querySelector('table');
 
-      if (!table) throw new Error("❌ No table found in Google Sheet");
+      if (!table) {
+        throw new Error('❌ Could not find table in sheet HTML.');
+      }
 
-      const rows = table.querySelectorAll('tbody tr');
+      const rows = table.querySelectorAll('tr');
+      dishAvailability = {};
 
-      rows.forEach((row, index) => {
-        if (index === 0) return; // skip header
-        const cells = row.querySelectorAll('td');
-        if (cells.length >= 2) {
-          const name = normalizeName(cells[0].innerText);
-          const status = cells[1].innerText.trim().toUpperCase();
+      for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i].querySelectorAll('td');
+        if (cols.length >= 2) {
+          const name = normalizeName(cols[0].innerText);
+          const status = cols[1].innerText.trim().toUpperCase();
           dishAvailability[name] = status === 'Y';
         }
-      });
+      }
 
-      console.log("🔄 Availability map:", dishAvailability);
+      console.log("✅ Loaded dish availability:", dishAvailability);
       updateMenuAvailability();
     })
-    .catch(err => console.error("⚠️ Error loading sheet:", err));
+    .catch(error => {
+      console.error('🚨 Error loading sheet data:', error);
+    });
 }
 
 function updateMenuAvailability() {
