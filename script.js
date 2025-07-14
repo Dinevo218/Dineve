@@ -7,33 +7,30 @@ function normalizeName(name) {
 }
 
 function fetchAvailability() {
-  fetch('https://v1.nocodeapi.com/dinevo/google_sheets/quoTnlsNzLudWGjI?tabId=Sheet1')
-    .then(res => res.json())
-    .then(data => {
-      const rows = data.data;
+  const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pubhtml?gid=0&single=true';
 
-      if (!rows || rows.length === 0) {
-        throw new Error("No data found in sheet");
-      }
+  fetch(sheetURL)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const rows = doc.querySelectorAll('table tr');
 
       for (let i = 1; i < rows.length; i++) {
-        const rawName = rows[i][0];
-        const rawStatus = rows[i][1];
-
-        if (!rawName || !rawStatus) continue;
-
-        const name = normalizeName(rawName);
-        const available = rawStatus.trim().toUpperCase() === 'Y';
-        dishAvailability[name] = available;
+        const cells = rows[i].querySelectorAll('td');
+        if (cells.length >= 2) {
+          const name = normalizeName(cells[0].innerText);
+          const available = cells[1].innerText.trim().toUpperCase() === 'Y';
+          dishAvailability[name] = available;
+        }
       }
 
       updateMenuAvailability();
     })
     .catch(error => {
-      console.error('🚨 Error fetching availability:', error);
+      console.error('🚨 Failed to fetch sheet HTML:', error);
     });
 }
-
 
 function updateMenuAvailability() {
   document.querySelectorAll('.dish').forEach(dishEl => {
