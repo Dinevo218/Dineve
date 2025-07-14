@@ -6,70 +6,66 @@ function normalizeName(name) {
   return name.toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
+
 function fetchAvailability() {
-  fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pubhtml?gid=0&single=true')
-    .then(response => response.text())
+  fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vTNXMZ71_oZARWaNZ3eTJlXJ8q-u3d84AyOAj1a9ZEuS6YzToiCgA9Hw4LQ-Tk32Xm3IvsAHnVuqOty/pub?gid=0&single=true&output=html')
+    .then(res => res.text())
     .then(html => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
-      const table = doc.querySelector('table');
 
-      if (!table) {
-        throw new Error('❌ Could not find table in sheet HTML.');
-      }
-
-      const rows = table.querySelectorAll('tr');
+      const rows = doc.querySelectorAll('table tr');
       dishAvailability = {};
 
-      for (let i = 1; i < rows.length; i++) {
-        const cols = rows[i].querySelectorAll('td');
-        if (cols.length >= 2) {
-          const name = normalizeName(cols[0].innerText);
-          const status = cols[1].innerText.trim().toUpperCase();
-          dishAvailability[name] = status === 'Y';
-        }
-      }
+      rows.forEach((row, index) => {
+        if (index === 0) return; // skip header
+        const cols = row.querySelectorAll('td');
+        if (cols.length < 2) return;
 
-      console.log("🔎 Comparing dish names from sheet to menu:");
+        const name = normalizeName(cols[0].innerText);
+        const status = cols[1].innerText.trim().toUpperCase();
+        dishAvailability[name] = (status === 'Y');
+      });
 
-document.querySelectorAll('.dish').forEach(dishEl => {
-  const h3 = dishEl.querySelector('h3');
-  const dishName = normalizeName(h3.innerText);
-  console.log(`HTML Dish: "${dishName}"`, "→ Available:", dishAvailability[dishName]);
-});
+      console.log("✅ Parsed availability from Google Sheet:", dishAvailability);
+      updateMenuAvailability();
+    })
+    .catch(err => console.error('❌ Failed to fetch availability:', err));
+}
+
 
 function updateMenuAvailability() {
-  console.log("🔄 Availability map:", dishAvailability); // Debug line
-
   document.querySelectorAll('.dish').forEach(dishEl => {
     const h3 = dishEl.querySelector('h3');
     if (!h3) return;
 
-const dishName = normalizeName(h3.innerText);
-const isAvailable = dishAvailability[dishName];
+    const dishName = normalizeName(h3.innerText);
+    const isAvailable = dishAvailability[dishName];
 
-if (isAvailable === false) {
-  dishEl.classList.add('unavailable');
-  const buttons = dishEl.querySelectorAll('.dish-buttons button');
-  buttons.forEach(btn => {
-    if (btn.innerText.toLowerCase().includes('add')) {
-      btn.disabled = true;
-      btn.innerText = 'Not available today';
-    }
-  });
-} else {
-  // Restore if previously hidden
-  dishEl.classList.remove('unavailable');
-  const buttons = dishEl.querySelectorAll('.dish-buttons button');
-  buttons.forEach(btn => {
-    if (btn.innerText === 'Not available today') {
-      btn.disabled = false;
-      btn.innerText = 'Add to Cart';
+    console.log(`🧪 Checking "${dishName}" →`, isAvailable);
+
+    const buttons = dishEl.querySelectorAll('.dish-buttons button');
+
+    if (isAvailable === false) {
+      dishEl.classList.add('unavailable');
+      buttons.forEach(btn => {
+        if (btn.innerText.toLowerCase().includes('add')) {
+          btn.disabled = true;
+          btn.innerText = 'Not available today';
+        }
+      });
+    } else {
+      dishEl.classList.remove('unavailable');
+      buttons.forEach(btn => {
+        if (btn.innerText === 'Not available today') {
+          btn.disabled = false;
+          btn.innerText = 'Add to Cart';
+        }
+      });
     }
   });
 }
 
-window.addEventListener('DOMContentLoaded', fetchAvailability);
 
 // 🛒 Everything below is unchanged (your existing cart logic)...
 
