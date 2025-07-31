@@ -42,7 +42,7 @@ function updateMenuAvailability(dishAvailability) {
 
     if (isAvailable === false) {
       dishEl.classList.add('unavailable');
-      dishEl.style.opacity = 0.4;
+      dishEl.style.opacity = 1; // Let the CSS overlay handle dimming
 
       const buttons = dishEl.querySelectorAll('button');
       buttons.forEach(btn => {

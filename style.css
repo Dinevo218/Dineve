@@ -523,3 +523,28 @@ button:active {
   opacity: 0.4;
   pointer-events: none;
 }
+
+.dish.unavailable {
+  position: relative;
+  opacity: 1; /* Reset to normal */
+  pointer-events: none;
+}
+
+.dish.unavailable::after {
+  content: "Not available today";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(180, 180, 180, 0.7); /* semi-transparent grey */
+  color: #333;
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  z-index: 5;
+  text-align: center;
+}
