@@ -91,10 +91,11 @@ function openCart() {
     html += `<div class="cart-total">Total: ₹${total}</div>`;
   }
 
-  html += `<div class="cart-actions">
-    <button class="place-order" onclick="placeOrder()">Place Order</button>
-    <button class="close" onclick="closeCart()">Close</button>
-  </div>`;
+html += `<div class="cart-actions">
+  <button class="place-order" onclick="placeOrder()">Place Order</button>
+  <button class="send-order" onclick="sendOrderToWaiter()">Send on WhatsApp</button>
+  <button class="close" onclick="closeCart()">Close</button>
+</div>`;
 
   cartModal.innerHTML = html;
   cartModal.style.display = "block";
