@@ -92,8 +92,8 @@ function openCart() {
   }
 
 html += `<div class="cart-actions">
-  <button class="place-order" onclick="placeOrder()">Place Order</button>
-  <button class="send-order" onclick="sendOrderToWaiter()">Send on WhatsApp</button>
+  <button class="place-order" onclick="sendOrderToWhatsApp()">Place Order</button>
+  <button class="view-bill" onclick="placeOrder()">Total Bill</button>
   <button class="close" onclick="closeCart()">Close</button>
 </div>`;
 
@@ -187,25 +187,18 @@ function viewAR(url) {
   window.open(url, "_blank");
 }
 
-function sendOrderToWaiter() {
-  const newItems = cart.map(currentItem => {
-    const previous = lastSentCart.find(prev => prev.name === currentItem.name);
-    const prevQty = previous ? previous.quantity : 0;
-    const newQty = currentItem.quantity - prevQty;
-
-    return newQty > 0 ? { name: currentItem.name, quantity: newQty } : null;
-  }).filter(item => item !== null);
-
-  if (newItems.length === 0) {
-    showToast("No new items to send.");
+function sendOrderToWhatsApp() {
+  if (cart.length === 0) {
+    showToast("Cart is empty!");
     return;
   }
 
-  const message = newItems.map(item => `${item.name} x${item.quantity}`).join('\n');
-  const phone = "919113692373";
-  const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  const message = cart.map(item => `${item.name} x${item.quantity}`).join('\n');
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const fullMessage = `🧾 *Your Order:*\n${message}\n\n💰 *Total: ₹${total}*`;
 
-  lastSentCart = cart.map(item => ({ ...item }));
+  const phone = "919113692373"; // ← Change to your number if needed
+  const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(fullMessage)}`;
   window.open(whatsappURL, '_blank');
 }
 

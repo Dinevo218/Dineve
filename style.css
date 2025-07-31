@@ -568,3 +568,18 @@ button:active {
   background-color: #ccc;
   color: black;
 }
+
+.cart-actions .place-order {
+  background-color: #25d366; /* WhatsApp green */
+  color: white;
+}
+
+.cart-actions .view-bill {
+  background-color: #2196f3; /* Blue for bill */
+  color: white;
+}
+
+.cart-actions .close {
+  background-color: #ccc;
+  color: black;
+}
