@@ -548,3 +548,23 @@ button:active {
   z-index: 5;
   text-align: center;
 }
+
+.cart-actions .send-order {
+  background-color: #25d366;
+  color: white;
+}
+
+.cart-actions .place-order {
+  background-color: #25d366;
+  color: white;
+}
+
+.cart-actions .view-bill {
+  background-color: #2196f3;
+  color: white;
+}
+
+.cart-actions .close {
+  background-color: #ccc;
+  color: black;
+}
