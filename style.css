@@ -583,3 +583,22 @@ button:active {
   background-color: #ccc;
   color: black;
 }
+
+.table-input {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.table-input label {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.table-input input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}

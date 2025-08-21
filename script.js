@@ -91,6 +91,11 @@ function openCart() {
     html += `<div class="cart-total">Total: ₹${total}</div>`;
   }
 
+  html += `<div class="table-input">
+  <label for="tableNo">Table / Room No.:</label>
+  <input type="text" id="tableNo" placeholder="Enter here" />
+</div>`;
+
 html += `<div class="cart-actions">
   <button class="place-order" onclick="sendOrderToWhatsApp()">Place Order</button>
   <button class="view-bill" onclick="placeOrder()">Total Bill</button>
@@ -193,9 +198,11 @@ function sendOrderToWhatsApp() {
     return;
   }
 
+  const tableNo = document.getElementById("tableNo")?.value || "N/A";
+
   const message = cart.map(item => `${item.name} x${item.quantity}`).join('\n');
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const fullMessage = `🧾 *Your Order:*\n${message}\n\n💰 *Total: ₹${total}*`;
+  const fullMessage = `🪑 *Table/Room No:* ${tableNo}\n\n🧾 *Your Order:*\n${message}\n\n💰 *Total: ₹${total}*`;
 
   const phone = "919113692373"; // ← Change to your number if needed
   const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(fullMessage)}`;
